@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Saldo - NIX SOCIAIS</title>
+
+<style>
+body{
+background:#0b0b0b;
+color:white;
+font-family:Arial,sans-serif;
+padding:20px;
+}
+
+h1,h2{
+color:#d4af37;
+}
+
+a{
+color:#d4af37;
+text-decoration:none;
+}
+
+.card{
+background:#151515;
+border:1px solid #d4af37;
+padding:15px;
+border-radius:10px;
+margin-bottom:15px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:8px;
+background:#222;
+border:1px solid #d4af37;
+color:white;
+border-radius:8px;
+}
+
+button{
+background:#d4af37;
+color:black;
+border:0;
+padding:12px;
+margin-top:10px;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.usuario{
+background:#151515;
+border:1px solid #d4af37;
+padding:12px;
+border-radius:10px;
+margin-bottom:10px;
+}
+</style>
+</head>
+
+<body>
+
+<a href="dashboard.html">⬅ Voltar ao Dashboard</a>
+
+<h1>💰 Gerenciar Saldo</h1>
+
+<div class="card">
+
+<h2>Adicionar Saldo</h2>
+
+<input id="usuario" placeholder="Nome do usuário">
+
+<input id="valor" type="number" placeholder="Valor">
+
+<button onclick="adicionarSaldo()">
+Adicionar Saldo
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Últimas Recargas</h2>
+
+<div id="lista">
+Carregando...
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+serverTimestamp,
+onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyBDmMHv_QDAgpJROzMiDlqSyahhRcWL1v0",
+authDomain:"st-streaming-9acd9.firebaseapp.com",
+projectId:"st-streaming-9acd9",
+storageBucket:"st-streaming-9acd9.firebasestorage.app",
+messagingSenderId:"695341762827",
+appId:"1:695341762827:web:d68e0e626e83f8b2e83a0e"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+
+window.adicionarSaldo = async function(){
+
+const usuario =
+document.getElementById("usuario").value;
+
+const valor =
+Number(document.getElementById("valor").value);
+
+if(!usuario || !valor){
+alert("Preencha todos os campos.");
+return;
+}
+
+await addDoc(collection(db,"recargas"),{
+usuario,
+valor,
+status:"Aprovado",
+criadoEm:serverTimestamp()
+});
+
+alert("Saldo registrado!");
+
+};
+
+onSnapshot(collection(db,"recargas"),snap=>{
+
+let html="";
+
+snap.forEach(d=>{
+
+const r=d.data();
+
+html+=`
+<div class="usuario">
+<b>${r.usuario}</b><br>
+💰 R$ ${r.valor}<br>
+✅ ${r.status}
+</div>
+`;
+
+});
+
+document.getElementById("lista").innerHTML=
+html || "Nenhuma recarga.";
+
+});
+
+</script>
+
+</body>
+</html>

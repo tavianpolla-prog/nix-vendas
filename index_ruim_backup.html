@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ST Streaming</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#0b0b0b;color:white}
+header{background:#111;border-bottom:1px solid #d4af37;padding:20px;text-align:center}
+.logo{font-size:30px;font-weight:900;color:#d4af37}
+.hero{padding:50px 20px;text-align:center;background:linear-gradient(180deg,#151515,#0b0b0b)}
+.hero h1{font-size:34px;color:#d4af37;margin-bottom:10px}
+.hero p{color:#ddd}
+.box{max-width:900px;margin:20px auto;padding:20px}
+.categorias{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20p
+..produto{
+background:#151515;
+border:1px solid #d4af37;
+border-radius:6px;
+padding:10px 12px;
+margin-bottom:8px;
+font-size:14px;
+}
+
+.produto h3{
+font-size:15px;
+margin-bottom:4px;
+}
+
+.produto p{
+font-size:12px;
+color:#bbb;
+}
+
+.preco{
+font-size:16px;
+font-weight:900;
+color:#d4af37;
+margin:5px 0;
+}
+
+.produto button{
+padding:7px 10px;
+font-size:12px;
+border-radius:5px;
+
+.preco{font-size:26px;font-weight:900;color:#d4af37;margin:10px 0}
+button{background:#d4af37;color:black;border:0;padding:12px 18px;border-radius:8px;font-weight:900;cursor:pointer}
+input,select,textarea{width:100%;padding:13px;margin:8px 0;background:#222;border:1px solid #d4af37;color:white;border-radius:8px}
+.checkout,.meuPedido,.chatBox,.avaliacao{display:none;background:#151515;border:1px solid #d4af37;border-radius:10px;padding:18px;margin-top:20px}
+.status{background:#222;border:1px solid #d4af37;border-radius:8px;padding:14px;margin-top:12px}
+.msg{background:#222;border-radius:8px;padding:10px;margin:8px 0}
+.adminmsg{background:#3b2f0b}
+@media(max-width:600px){.categorias{grid-template-columns:1fr}.hero h1{font-size:28px}}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">ST STREAMING</div>
+</header>
+
+<section class="hero">
+<h1>Seu universo digital em um só lugar</h1>
+<p>Streaming e Serviços Sociais com entrega rápida, Pix e suporte.</p>
+</section>
+
+<div class="box">
+
+<div class="categorias">
+<div class="cat" onclick="filtrarCategoria('Streaming')">📺 Streaming</div>
+<div class="cat" onclick="filtrarCategoria('Serviços Sociais')">🌐 Serviços Sociais</div>
+</div>
+
+<div id="promocao" class="status">
+🔥 Promoções especiais disponíveis por tempo limitado.
+</div>
+
+<h2 style="color:#d4af37;margin:20px 0">Produtos</h2>
+<div id="listaProdutos">Carregando produtos...</div><div id="checkout" class="checkout">
+<h2 style="color:#d4af37">💳 Finalizar Pedido</h2>
+
+<p id="produtoSelecionado"></p>
+<label>💳 Chave Pix para pagamento</label>
+
+<div style="
+background:#222;
+border:1px solid #d4af37;
+padding:12px;
+border-radius:8px;
+margin:10px 0;
+display:flex;
+justify-content:space-between;
+align-items:center;
+">
+
+<span id="pixKey">71994141667</span>
+
+<button type="button" onclick="copiarPix()">
+📋 Copiar
+</button>
+
+</div>
+<input id="clienteNome" placeholder="Seu nome">
+<input id="nomePix" placeholder="Nome usado no pagamento Pix">
+
+<select id="formaEntrega">
+<option>Chat da Plataforma</option>
+<option>WhatsApp</option>
+<option>Telegram</option>
+</select>
+
+<input id="contatoEntrega" placeholder="Contato para entrega">
+
+<label>💳 Chave Pix para pagamento</label>
+
+<div style="
+background:#222;
+border:1px solid #d4af37;
+padding:12px;
+border-radius:8px;
+margin:10px 0;
+display:flex;
+justify-content:space-between;
+align-items:center;
+">
+
+<span id="pixKey">71994141667</span>
+
+<button type="button" onclick="copiarPix()">
+📋 Copiar
+</button>
+
+</div>
+
+<button onclick="criarPedido()">Enviar Pedido</button>
+
+<div id="statusPedido"></div>
+</div>
+ 
+<div id="meuPedido" class="meuPedido">
+<h2 style="color:#d4af37">📦 Meu Pedido</h2>
+<div id="infoPedido"></div>
+
+<div id="chatCliente" class="chatBox">
+<h3 style="color:#d4af37">💬 Chat de Atendimento</h3>
+<div id="mensagens"></div>
+<textarea id="textoCliente" placeholder="Digite sua mensagem..."></textarea>
+<button onclick="enviarMensagemCliente()">Enviar</button>
+</div>
+
+<div id="avaliacao" class="avaliacao">
+<h3 style="color:#d4af37">⭐ Avalie seu atendimento</h3>
+<select id="nota">
+<option value="5">5 estrelas</option>
+<option value="4">4 estrelas</option>
+<option value="3">3 estrelas</option>
+<option value="2">2 estrelas</option>
+<option value="1">1 estrela</option>
+</select>
+<textarea id="comentario" placeholder="Comentário opcional"></textarea>
+<button onclick="enviarAvaliacao()">Enviar avaliação</button>
+</div>
+</div><script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import {
+getFirestore, collection, onSnapshot, addDoc, doc, getDoc,
+serverTimestamp, query, orderBy
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyBDmMHv_QDAgpJROzMiDlqSyahhRcWL1v0",
+authDomain:"st-streaming-9acd9.firebaseapp.com",
+projectId:"st-streaming-9acd9",
+storageBucket:"st-streaming-9acd9.firebasestorage.app",
+messagingSenderId:"695341762827",
+appId:"1:695341762827:web:d68e0e626e83f8b2e83a0e"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+
+let categoriaAtual="Streaming";
+let produtoAtual="";
+let precoAtual=0;
+let pedidoAtual=localStorage.getItem("pedidoAtual") || "";
+
+function carregarProdutos(){
+onSnapshot(collection(db,"produtos"),snap=>{
+let html="";
+snap.forEach(d=>{
+const p=d.data();
+if(p.ativo!==false && p.categoria===categoriaAtual){
+html+=`
+<div class="produto"
+onclick="comprar('${p.nome}',${p.preco})">
+
+${p.categoria==="Streaming"?"📺":"🌐"} ${p.nome}
+
+</div>`;
+}
+});
+document.getElementById("listaProdutos").innerHTML=html||"Nenhum produto encontrado.";
+});
+}
+
+window.filtrarCategoria=function(cat){
+categoriaAtual=cat;
+carregarProdutos();
+};
+
+window.comprar=function(nome,preco){
+produtoAtual=nome;
+precoAtual=preco;
+document.getElementById("checkout").style.display="block";
+document.getElementById("produtoSelecionado").innerText=`Produto: ${nome} | Valor: R$ ${preco}`;
+document.getElementById("checkout").scrollIntoView({behavior:"smooth"});
+};
+
+window.criarPedido=async function(){
+const clienteNome=document.getElementById("clienteNome").value;
+const nomePix=document.getElementById("nomePix").value;
+const formaEntrega=document.getElementById("formaEntrega").value;
+const contatoEntrega=document.getElementById("contatoEntrega").value;
+
+if(!clienteNome || !nomePix){
+alert("Preencha seu nome e o nome usado no Pix.");
+return;
+}
+
+const ref=await addDoc(collection(db,"pedidos"),{
+clienteNome,
+produto:produtoAtual,
+preco:precoAtual,
+nomePix,
+formaEntrega,
+contatoEntrega,
+status:"Processando pagamento",
+chatAberto:false,
+criadoEm:serverTimestamp()
+});
+
+pedidoAtual=ref.id;
+localStorage.setItem("pedidoAtual",pedidoAtual);
+
+await addDoc(collection(db,"pedidos",pedidoAtual,"mensagens"),{
+autor:"sistema",
+texto:"⏳ Pedido criado. Estamos verificando seu pagamento.",
+criadoEm:serverTimestamp()
+});
+
+document.getElementById("statusPedido").innerHTML=
+'<div class="status">⏳ Processando pagamento... Aguarde enquanto verificamos seu pagamento.</div>';
+
+abrirPedidoCliente();
+};
+
+function abrirPedidoCliente(){
+if(!pedidoAtual)return;
+
+document.getElementById("meuPedido").style.display="block";
+
+onSnapshot(doc(db,"pedidos",pedidoAtual),snap=>{
+if(!snap.exists())return;
+
+const p=snap.data();
+
+document.getElementById("infoPedido").innerHTML=`
+<div class="status">
+<b>Produto:</b> ${p.produto}<br>
+<b>Status:</b> ${p.status}<br>
+<b>Entrega:</b> ${p.formaEntrega}<br>
+</div>`;
+
+if(p.status==="Pagamento confirmado" || p.chatAberto===true || p.status==="Acesso enviado"){
+document.getElementById("chatCliente").style.display="block";
+}else{
+document.getElementById("chatCliente").style.display="none";
+}
+
+if(p.status==="Entregue"){
+document.getElementById("avaliacao").style.display="block";
+}
+});
+
+const q=query(collection(db,"pedidos",pedidoAtual,"mensagens"),orderBy("criadoEm"));
+
+onSnapshot(q,snap=>{
+let html="";
+snap.forEach(d=>{
+const m=d.data();
+let classe=m.autor==="admin"?"adminmsg":"";
+html+=`<div class="msg ${classe}"><b>${m.autor}:</b> ${m.texto}</div>`;
+});
+document.getElementById("mensagens").innerHTML=html;
+});
+}
+
+window.enviarMensagemCliente=async function(){
+const texto=document.getElementById("textoCliente").value;
+if(!texto || !pedidoAtual)return;
+
+await addDoc(collection(db,"pedidos",pedidoAtual,"mensagens"),{
+autor:"cliente",
+texto,
+criadoEm:serverTimestamp()
+});
+
+document.getElementById("textoCliente").value="";
+};
+
+window.enviarAvaliacao=async function(){
+await addDoc(collection(db,"avaliacoes"),{
+pedidoId:pedidoAtual,
+nota:document.getElementById("nota").value,
+comentario:document.getElementById("comentario").value,
+criadoEm:serverTimestamp()
+});
+
+alert("Avaliação enviada. Obrigado!");
+};
+
+window.copiarPix = function(){
+
+const chave = document.getElementById("pixKey").innerText;
+
+navigator.clipboard.writeText(chave);
+
+alert("✅ Chave Pix copiada!");
+window.copiarPix = function(){
+
+const chave = document.getElementById("pixKey").innerText;
+
+navigator.clipboard.writeText(chave);
+
+alert("✅ Chave Pix copiada!");
+
+}
+}
+carregarProdutos();
+abrirPedidoCliente();
+</script>
+
+</div>
+</body>
+</html>
