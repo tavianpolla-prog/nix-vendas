@@ -10,22 +10,24 @@
 body{background:linear-gradient(180deg,#09b6c8,#037b8c);color:#123}
 header{height:90px;background:white;display:flex;align-items:center;justify-content:space-between;padding:0 28px}
 .logo{font-size:30px;font-weight:900;color:#12aeca;letter-spacing:3px}
-.menu{font-size:34px;color:#123}
+.menu{font-size:34px}
 .hero{text-align:center;padding:70px 20px 40px}
 .saldo{display:inline-block;background:#12bddd;color:white;font-size:32px;font-weight:900;padding:22px 35px;border-radius:6px}
-.box{background:white;margin:15px auto 90px;max-width:760px;border-radius:6px;padding:28px;box-shadow:0 10px 35px #0002}
+.box{background:white;margin:15px auto 90px;max-width:820px;border-radius:8px;padding:28px;box-shadow:0 10px 35px #0002}
 .search{border:1px solid #9bd6df;background:#f3fbfc;padding:18px;font-size:20px;margin-bottom:25px}
 .search input{border:0;background:transparent;font-size:20px;width:85%;outline:none}
-label{font-weight:900;font-size:20px;color:#11384a}
-.select{border:1px solid #9bd6df;margin:12px 0 20px;padding:15px;background:#f3fbfc;font-size:19px}
+label{font-weight:900;font-size:18px;color:#11384a}
+.select{border:1px solid #9bd6df;margin:12px 0 20px;padding:15px;background:#f3fbfc;font-size:19px;cursor:pointer}
 .produto{border-bottom:1px solid #ddd;padding:18px 0}
 .produto h3{font-size:22px;color:#089bb4}
 .produto p{font-size:17px;margin:7px 0;color:#18425a}
 .preco{font-size:24px;font-weight:900;color:#0aaec9}
-button{background:#08b8d4;color:white;border:0;padding:13px 24px;border-radius:6px;font-size:18px;font-weight:900;margin-top:10px}
-.pagamento{display:none;background:#f3fbfc;border:1px solid #9bd6df;padding:20px;margin-top:20px}
-input{width:100%;padding:14px;border:1px solid #9bd6df;margin:8px 0;font-size:17px}
+button,.btn{background:#08b8d4;color:white;border:0;padding:13px 24px;border-radius:6px;font-size:18px;font-weight:900;margin-top:10px;text-decoration:none;display:inline-block}
+.pagamento,.clienteArea,.adminArea{display:none;background:#f3fbfc;border:1px solid #9bd6df;padding:20px;margin-top:20px}
+input,select,textarea{width:100%;padding:14px;border:1px solid #9bd6df;margin:8px 0;font-size:17px;border-radius:6px}
 .status{background:#e8fbff;border:1px solid #9bd6df;padding:18px;margin-top:15px}
+.chatBox{height:230px;overflow:auto;background:white;border:1px solid #9bd6df;padding:12px;margin-top:12px}
+.msg{background:#e8fbff;margin:8px 0;padding:10px;border-radius:8px}
 .float{position:fixed;bottom:35px;width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:34px;font-weight:900;text-decoration:none}
 .whats{left:28px;background:#25d366}
 .chat{right:28px;background:#005cff}
@@ -50,110 +52,344 @@ footer{text-align:center;color:white;padding:25px}
 
 <label>Categoria</label>
 <div class="select" onclick="mostrar('streaming')">📺 Streaming</div>
-<div class="select" onclick="mostrar('servicos')">💻 Serviços Digitais</div>
+<div class="select" onclick="mostrar('servicos')">💻 Serviços Digitais</div><div id="streaming">
 
-<div id="streaming">
 <div class="produto" data-nome="netflix">
 <h3>📺 Netflix</h3>
-<p>Plano digital com entrega após confirmação.</p>
+<p>Plano digital com entrega rápida.</p>
 <div class="preco">R$ 9,00</div>
-<button onclick="comprar('Netflix')">Comprar</button>
+<button onclick="comprar('Netflix','9,00')">Comprar</button>
 </div>
 
 <div class="produto" data-nome="disney">
 <h3>🎬 Disney+</h3>
-<p>Assinatura digital para filmes e séries.</p>
+<p>Filmes e séries premium.</p>
 <div class="preco">R$ 8,00</div>
-<button onclick="comprar('Disney+')">Comprar</button>
+<button onclick="comprar('Disney+','8,00')">Comprar</button>
 </div>
 
-<div class="produto" data-nome="hbo max">
+<div class="produto" data-nome="hbo">
 <h3>🍿 HBO Max</h3>
-<p>Streaming premium com suporte.</p>
 <div class="preco">R$ 10,00</div>
-<button onclick="comprar('HBO Max')">Comprar</button>
+<button onclick="comprar('HBO Max','10,00')">Comprar</button>
 </div>
 
-<div class="produto" data-nome="prime video">
+<div class="produto" data-nome="prime">
 <h3>▶️ Prime Video</h3>
-<p>Plano digital com liberação rápida.</p>
 <div class="preco">R$ 8,00</div>
-<button onclick="comprar('Prime Video')">Comprar</button>
+<button onclick="comprar('Prime Video','8,00')">Comprar</button>
 </div>
+
+<div class="produto" data-nome="crunchyroll">
+<h3>🍥 Crunchyroll</h3>
+<div class="preco">R$ 7,00</div>
+<button onclick="comprar('Crunchyroll','7,00')">Comprar</button>
+</div>
+
 </div>
 
 <div id="servicos" style="display:none">
+
 <div class="produto" data-nome="whatsapp">
 <h3>📱 WhatsApp</h3>
-<p>Serviço digital com atendimento após pagamento.</p>
 <div class="preco">R$ 15,00</div>
-<button onclick="comprar('WhatsApp')">Comprar</button>
+<button onclick="comprar('WhatsApp','15,00')">Comprar</button>
 </div>
 
 <div class="produto" data-nome="telegram">
 <h3>✈️ Telegram</h3>
-<p>Serviço digital com suporte.</p>
 <div class="preco">R$ 15,00</div>
-<button onclick="comprar('Telegram')">Comprar</button>
+<button onclick="comprar('Telegram','15,00')">Comprar</button>
 </div>
 
 <div class="produto" data-nome="discord">
 <h3>🎮 Discord</h3>
-<p>Serviço digital personalizado.</p>
 <div class="preco">R$ 15,00</div>
-<button onclick="comprar('Discord')">Comprar</button>
+<button onclick="comprar('Discord','15,00')">Comprar</button>
 </div>
 
 <div class="produto" data-nome="ifood">
 <h3>🍔 iFood</h3>
-<p>Serviço digital sob consulta.</p>
 <div class="preco">R$ 20,00</div>
-<button onclick="comprar('iFood')">Comprar</button>
+<button onclick="comprar('iFood','20,00')">Comprar</button>
 </div>
 
 <div class="produto" data-nome="tinder">
 <h3>❤️ Tinder</h3>
-<p>Serviço digital sob atendimento.</p>
 <div class="preco">R$ 20,00</div>
-<button onclick="comprar('Tinder')">Comprar</button>
+<button onclick="comprar('Tinder','20,00')">Comprar</button>
 </div>
+
 </div>
 
 <div id="pagamento" class="pagamento">
+
 <h2>💳 Confirmação de Pagamento</h2>
+
 <p id="produtoEscolhido"></p>
+
 <input value="71994141667" readonly>
-<input id="nomePix" placeholder="Nome usado no pagamento Pix">
-<button onclick="confirmar()">Confirmar Pagamento</button>
-<div id="status"></div>
+
+<label>Nome usado no pagamento</label>
+<input id="nomePix" placeholder="Digite o nome usado no Pix">
+
+<label>Como deseja receber seu pedido?</label>
+
+<select id="formaEntrega" onchange="mostrarContatoEntrega()">
+<option value="chat">Chat da Plataforma</option>
+<option value="whatsapp">WhatsApp</option>
+<option value="telegram">Telegram</option>
+</select>
+
+<div id="campoContatoEntrega"></div>
+
+<button onclick="confirmarPagamento()">
+Confirmar Pagamento
+</button>
+
+<div id="statusArea"></div>
+
+</div><div id="clienteArea" class="clienteArea">
+
+<h2>📦 Acompanhar Pedido</h2>
+<p id="pedidoStatus"></p>
+
+<div class="chatBox" id="chatBox">
+<div class="msg"><b>Sistema:</b> Aguarde o atendimento.</div>
+</div>
+
+<textarea id="mensagemCliente" placeholder="Digite sua mensagem para o vendedor"></textarea>
+<button onclick="enviarMensagem()">Enviar mensagem</button>
+
+<div id="avaliacao" style="display:none;margin-top:20px">
+<h3>⭐ Avalie seu atendimento</h3>
+<select id="nota">
+<option value="5">5 estrelas</option>
+<option value="4">4 estrelas</option>
+<option value="3">3 estrelas</option>
+<option value="2">2 estrelas</option>
+<option value="1">1 estrela</option>
+</select>
+<textarea id="comentario" placeholder="Comentário opcional"></textarea>
+<button onclick="enviarAvaliacao()">Enviar avaliação</button>
 </div>
 
 </div>
 
-<a class="float whats" href="#">☎</a>
-<a class="float chat" href="#">✉</a>
+<a class="float whats" href="https://wa.me/5571994141667" target="_blank">☎</a>
+<a class="float chat" href="#clienteArea">✉</a>
+
+</div>
 
 <footer>© ST Streaming</footer>
 
 <script>
+let produtoAtual="";
+let precoAtual="";
+let pedidoStatus="";
+
 function mostrar(tipo){
 document.getElementById("streaming").style.display=tipo==="streaming"?"block":"none";
 document.getElementById("servicos").style.display=tipo==="servicos"?"block":"none";
 }
 
-function comprar(produto){
+function comprar(produto,preco){
+produtoAtual=produto;
+precoAtual=preco;
 document.getElementById("pagamento").style.display="block";
-document.getElementById("produtoEscolhido").innerText="Produto selecionado: "+produto;
+document.getElementById("produtoEscolhido").innerText="Produto selecionado: "+produto+" - R$ "+preco;
 document.getElementById("pagamento").scrollIntoView({behavior:"smooth"});
+mostrarContatoEntrega();
 }
 
-function confirmar(){
+function mostrarContatoEntrega(){
+let forma=document.getElementById("formaEntrega").value;
+let campo=document.getElementById("campoContatoEntrega");
+
+if(forma==="whatsapp"){
+campo.innerHTML='<input id="contatoEntrega" placeholder="Digite seu WhatsApp com DDD">';
+}else if(forma==="telegram"){
+campo.innerHTML='<input id="contatoEntrega" placeholder="Digite seu @ do Telegram">';
+}else{
+campo.innerHTML='<div class="status">Você receberá seu pedido pelo chat da plataforma.</div>';
+}
+}
+
+function confirmarPagamento(){
 let nome=document.getElementById("nomePix").value;
-if(!nome){alert("Digite o nome usado no pagamento");return}
-document.getElementById("status").innerHTML='<div class="status">⏳ Processando pagamento... Aguarde enquanto verificamos seu pagamento.</div>';
+let forma=document.getElementById("formaEntrega").value;
+let contato=document.getElementById("contatoEntrega") ? document.getElementById("contatoEntrega").value : "Chat da plataforma";
+
+if(!nome){
+alert("Digite o nome usado no pagamento");
+return;
+}
+
+if((forma==="whatsapp" || forma==="telegram") && !contato){
+alert("Informe seu contato para entrega");
+return;
+}
+
+pedidoStatus="Processando pagamento";
+
+document.getElementById("statusArea").innerHTML='<div class="status">⏳ Processando pagamento... Aguarde enquanto verificamos seu pagamento.</div>';
+
+document.getElementById("clienteArea").style.display="block";
+document.getElementById("pedidoStatus").innerText="Status: Processando pagamento | Produto: "+produtoAtual+" | Entrega: "+forma;
+
 setTimeout(()=>{
-document.getElementById("status").innerHTML='<div class="status">✅ Pagamento confirmado. Um atendente irá iniciar seu atendimento em breve.</div>';
+pedidoStatus="Pagamento confirmado";
+document.getElementById("statusArea").innerHTML='<div class="status">✅ Pagamento confirmado. Um atendente irá iniciar seu atendimento em breve.</div>';
+document.getElementById("pedidoStatus").innerText="Status: Pagamento confirmado. Um atendente irá iniciar seu atendimento em breve.";
+document.getElementById("chatBox").innerHTML+='<div class="msg"><b>Sistema:</b> Pagamento confirmado. Aguarde o vendedor iniciar a entrega.</div>';
 },4000);
+}
+
+function enviarMensagem(){
+let texto=document.getElementById("mensagemCliente").value;
+if(!texto)return;
+
+document.getElementById("chatBox").innerHTML+='<div class="msg"><b>Cliente:</b> '+texto+'</div>';
+document.getElementById("mensagemCliente").value="";
+}
+
+function enviarAvaliacao(){
+let nota=document.getElementById("nota").value;
+let comentario=document.getElementById("comentario").value;
+
+alert("Avaliação enviada. Obrigado!");
+
+console.log("Avaliação privada:",{
+produto:produtoAtual,
+nota:nota,
+comentario:comentario
+});
+}
+
+function buscar(txt){
+txt=txt.toLowerCase();
+document.querySelectorAll(".produto").forEach(p=>{
+p.style.display=p.dataset.nome.includes(txt)?"block":"none";
+});
+}
+</script>
+
+</body>
+</html><div id="clienteArea" class="clienteArea">
+
+<h2>📦 Acompanhar Pedido</h2>
+<p id="pedidoStatus"></p>
+
+<div class="chatBox" id="chatBox">
+<div class="msg"><b>Sistema:</b> Aguarde o atendimento.</div>
+</div>
+
+<textarea id="mensagemCliente" placeholder="Digite sua mensagem para o vendedor"></textarea>
+<button onclick="enviarMensagem()">Enviar mensagem</button>
+
+<div id="avaliacao" style="display:none;margin-top:20px">
+<h3>⭐ Avalie seu atendimento</h3>
+<select id="nota">
+<option value="5">5 estrelas</option>
+<option value="4">4 estrelas</option>
+<option value="3">3 estrelas</option>
+<option value="2">2 estrelas</option>
+<option value="1">1 estrela</option>
+</select>
+<textarea id="comentario" placeholder="Comentário opcional"></textarea>
+<button onclick="enviarAvaliacao()">Enviar avaliação</button>
+</div>
+
+</div>
+
+<a class="float whats" href="https://wa.me/5571994141667" target="_blank">☎</a>
+<a class="float chat" href="#clienteArea">✉</a>
+
+</div>
+
+<footer>© ST Streaming</footer>
+
+<script>
+let produtoAtual="";
+let precoAtual="";
+let pedidoStatus="";
+
+function mostrar(tipo){
+document.getElementById("streaming").style.display=tipo==="streaming"?"block":"none";
+document.getElementById("servicos").style.display=tipo==="servicos"?"block":"none";
+}
+
+function comprar(produto,preco){
+produtoAtual=produto;
+precoAtual=preco;
+document.getElementById("pagamento").style.display="block";
+document.getElementById("produtoEscolhido").innerText="Produto selecionado: "+produto+" - R$ "+preco;
+document.getElementById("pagamento").scrollIntoView({behavior:"smooth"});
+mostrarContatoEntrega();
+}
+
+function mostrarContatoEntrega(){
+let forma=document.getElementById("formaEntrega").value;
+let campo=document.getElementById("campoContatoEntrega");
+
+if(forma==="whatsapp"){
+campo.innerHTML='<input id="contatoEntrega" placeholder="Digite seu WhatsApp com DDD">';
+}else if(forma==="telegram"){
+campo.innerHTML='<input id="contatoEntrega" placeholder="Digite seu @ do Telegram">';
+}else{
+campo.innerHTML='<div class="status">Você receberá seu pedido pelo chat da plataforma.</div>';
+}
+}
+
+function confirmarPagamento(){
+let nome=document.getElementById("nomePix").value;
+let forma=document.getElementById("formaEntrega").value;
+let contato=document.getElementById("contatoEntrega") ? document.getElementById("contatoEntrega").value : "Chat da plataforma";
+
+if(!nome){
+alert("Digite o nome usado no pagamento");
+return;
+}
+
+if((forma==="whatsapp" || forma==="telegram") && !contato){
+alert("Informe seu contato para entrega");
+return;
+}
+
+pedidoStatus="Processando pagamento";
+
+document.getElementById("statusArea").innerHTML='<div class="status">⏳ Processando pagamento... Aguarde enquanto verificamos seu pagamento.</div>';
+
+document.getElementById("clienteArea").style.display="block";
+document.getElementById("pedidoStatus").innerText="Status: Processando pagamento | Produto: "+produtoAtual+" | Entrega: "+forma;
+
+setTimeout(()=>{
+pedidoStatus="Pagamento confirmado";
+document.getElementById("statusArea").innerHTML='<div class="status">✅ Pagamento confirmado. Um atendente irá iniciar seu atendimento em breve.</div>';
+document.getElementById("pedidoStatus").innerText="Status: Pagamento confirmado. Um atendente irá iniciar seu atendimento em breve.";
+document.getElementById("chatBox").innerHTML+='<div class="msg"><b>Sistema:</b> Pagamento confirmado. Aguarde o vendedor iniciar a entrega.</div>';
+},4000);
+}
+
+function enviarMensagem(){
+let texto=document.getElementById("mensagemCliente").value;
+if(!texto)return;
+
+document.getElementById("chatBox").innerHTML+='<div class="msg"><b>Cliente:</b> '+texto+'</div>';
+document.getElementById("mensagemCliente").value="";
+}
+
+function enviarAvaliacao(){
+let nota=document.getElementById("nota").value;
+let comentario=document.getElementById("comentario").value;
+
+alert("Avaliação enviada. Obrigado!");
+
+console.log("Avaliação privada:",{
+produto:produtoAtual,
+nota:nota,
+comentario:comentario
+});
 }
 
 function buscar(txt){
