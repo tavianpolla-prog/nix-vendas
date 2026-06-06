@@ -87,3 +87,5 @@ function entrarAdmin(){if(document.getElementById("senha").value==="1234"){docum
 function salvarAdmin(){dados.pix=document.getElementById("adminPix").value;dados.produtos.forEach((p,i)=>{p.nome=document.getElementById("nome"+i).value;p.preco=document.getElementById("preco"+i).value});localStorage.setItem("stDados",JSON.stringify(dados));alert("Salvo!");renderSite()}
 if(location.search.includes("admin")){document.getElementById("site").style.display="none";document.getElementById("admin").style.display="block"}
 renderSite();
+</script></body></html>
+</script></body></html>
