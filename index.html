@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ST Streaming</title>
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:linear-gradient(180deg,#09b6c8,#037b8c);color:#123}
@@ -17,10 +16,10 @@ header{height:85px;background:white;display:flex;align-items:center;justify-cont
 .search{border:1px solid #9bd6df;background:#f3fbfc;padding:16px;font-size:20px;margin-bottom:22px}
 .search input{border:0;background:transparent;font-size:18px;width:85%;outline:none}
 .select{border:1px solid #9bd6df;margin:12px 0;padding:15px;background:#f3fbfc;font-size:19px;cursor:pointer}
-.produto,.pedido,.avaliacao,.cliente{border-bottom:1px solid #ddd;padding:18px 0}
+.produto,.pedido,.produtoAdmin{border-bottom:1px solid #ddd;padding:18px 0}
 .produto h3{font-size:22px;color:#089bb4}
 .preco{font-size:24px;font-weight:900;color:#0aaec9}
-button,.btn{background:#08b8d4;color:white;border:0;padding:12px 20px;border-radius:6px;font-size:17px;font-weight:900;margin-top:10px;text-decoration:none;display:inline-block}
+button,.btn{background:#08b8d4;color:white;border:0;padding:12px 20px;border-radius:6px;font-size:16px;font-weight:900;margin-top:8px;text-decoration:none;display:inline-block}
 .pagamento,.adminArea{display:none;background:#f3fbfc;border:1px solid #9bd6df;padding:20px;margin-top:20px}
 input,select,textarea{width:100%;padding:13px;border:1px solid #9bd6df;margin:8px 0;font-size:16px;border-radius:6px}
 .status{background:#e8fbff;border:1px solid #9bd6df;padding:16px;margin-top:15px}
@@ -29,7 +28,6 @@ input,select,textarea{width:100%;padding:13px;border:1px solid #9bd6df;margin:8p
 footer{text-align:center;color:white;padding:25px}
 </style>
 </head>
-
 <body>
 
 <header>
@@ -42,85 +40,72 @@ footer{text-align:center;color:white;padding:25px}
 </section>
 
 <div class="box" id="site">
-
 <div class="search">🔍 <input placeholder="Procurar" onkeyup="buscar(this.value)"></div>
 
-<div class="select" onclick="mostrar('streaming')">📺 Streaming</div>
-<div class="select" onclick="mostrar('sociais')">🌐 Serviços Sociais</div><div id="streaming">
-  <div class="produto" data-nome="netflix">
-    <h3>📺 Netflix</h3>
-    <div class="preco">R$ 9,00</div>
-    <button onclick="comprar('Netflix',9)">Comprar</button>
-  </div>
+<div class="select" onclick="mostrar('Streaming')">📺 Streaming</div>
+<div class="select" onclick="mostrar('Serviços Sociais')">🌐 Serviços Sociais</div>
 
-  <div class="produto" data-nome="disney">
-    <h3>🎬 Disney+</h3>
-    <div class="preco">R$ 8,00</div>
-    <button onclick="comprar('Disney+',8)">Comprar</button>
-  </div>
-</div>
-
-<div id="sociais" style="display:none">
-  <div class="produto" data-nome="whatsapp">
-    <h3>📱 WhatsApp</h3>
-    <div class="preco">R$ 15,00</div>
-    <button onclick="comprar('WhatsApp',15)">Comprar</button>
-  </div>
-
-  <div class="produto" data-nome="telegram">
-    <h3>✈️ Telegram</h3>
-    <div class="preco">R$ 15,00</div>
-    <button onclick="comprar('Telegram',15)">Comprar</button>
-  </div>
-</div>
+<div id="listaProdutos"></div>
 
 <div id="pagamento" class="pagamento">
-  <h2>💳 Confirmar Pagamento</h2>
-  <p id="produtoEscolhido"></p>
-
-  <input value="71994141667" readonly>
-  <input id="nomeCliente" placeholder="Seu nome">
-  <input id="nomePix" placeholder="Nome usado no Pix">
-
-  <select id="formaEntrega">
-    <option>Chat da Plataforma</option>
-    <option>WhatsApp</option>
-    <option>Telegram</option>
-  </select>
-
-  <input id="contatoEntrega" placeholder="Contato para entrega">
-  <button onclick="enviarPedido()">Enviar Pedido</button>
-
-  <div id="statusArea"></div>
+<h2>💳 Confirmar Pagamento</h2>
+<p id="produtoEscolhido"></p>
+<input value="71994141667" readonly>
+<input id="nomeCliente" placeholder="Seu nome">
+<input id="nomePix" placeholder="Nome usado no Pix">
+<select id="formaEntrega">
+<option>Chat da Plataforma</option>
+<option>WhatsApp</option>
+<option>Telegram</option>
+</select>
+<input id="contatoEntrega" placeholder="Contato para entrega">
+<button onclick="enviarPedido()">Enviar Pedido</button>
+<div id="statusArea"></div>
 </div>
-
 </div><div class="box adminArea" id="adminArea">
-  <h2>👑 Painel Admin</h2>
+<h2>👑 Painel Admin</h2>
 
-  <input id="senhaAdmin" type="password" placeholder="Senha admin">
-  <button onclick="loginAdmin()">Entrar</button>
+<input id="senhaAdmin" type="password" placeholder="Senha admin">
+<button onclick="loginAdmin()">Entrar</button>
 
-  <div id="painelAdmin" style="display:none">
-    <h2>📊 Dashboard</h2>
+<div id="painelAdmin" style="display:none">
 
-    <div class="dash">
-      <div>Total: <span id="totalPedidos">0</span></div>
-      <div>Processando: <span id="processando">0</span></div>
-      <div>Confirmados: <span id="confirmados">0</span></div>
-      <div>Entregues: <span id="entregues">0</span></div>
-      <div>Faturamento: R$ <span id="faturamento">0</span></div>
-    </div>
-
-    <h2>📋 Pedidos</h2>
-    <div id="listaPedidos"></div>
-  </div>
+<h2>📊 Dashboard</h2>
+<div class="dash">
+<div>Total: <span id="totalPedidos">0</span></div>
+<div>Processando: <span id="processando">0</span></div>
+<div>Confirmados: <span id="confirmados">0</span></div>
+<div>Entregues: <span id="entregues">0</span></div>
+<div>Faturamento: R$ <span id="faturamento">0</span></div>
 </div>
 
-<footer>© ST Streaming</footer>
+<h2>📋 Pedidos</h2>
+<div id="listaPedidos"></div>
 
-<script type="module">
+<h2>📦 Gerenciar Produtos</h2>
+
+<input id="produtoNome" placeholder="Nome do produto">
+<input id="produtoPreco" placeholder="Preço. Ex: 9">
+<select id="produtoCategoria">
+<option>Streaming</option>
+<option>Serviços Sociais</option>
+</select>
+<select id="produtoStatus">
+<option value="true">Ativo</option>
+<option value="false">Inativo</option>
+</select>
+
+<button onclick="salvarProduto()">Salvar Produto</button>
+
+<h3 style="margin-top:25px">Produtos cadastrados</h3>
+<div id="listaProdutosAdmin"></div>
+
+</div>
+</div>
+
+<footer>© ST Streaming</footer><script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBDmMHv_QDAgpJROzMiDlqSyahhRcWL1v0",
@@ -136,17 +121,47 @@ const db = getFirestore(app);
 
 let produtoAtual = "";
 let precoAtual = 0;
+let categoriaAtual = "Streaming";
 
-window.mostrar = function(tipo){
-  document.getElementById("streaming").style.display = tipo === "streaming" ? "block" : "none";
-  document.getElementById("sociais").style.display = tipo === "sociais" ? "block" : "none";
+if(location.search.includes("admin")){
+  document.getElementById("site").style.display = "none";
+  document.getElementById("adminArea").style.display = "block";
+}
+
+window.mostrar = function(categoria){
+  categoriaAtual = categoria;
+  carregarProdutos();
 };
+
+function carregarProdutos(){
+  onSnapshot(collection(db,"produtos"), snap => {
+    let html = "";
+
+    snap.forEach(d => {
+      const p = d.data();
+
+      if(p.categoria === categoriaAtual && p.ativo !== false){
+        html += `
+        <div class="produto" data-nome="${p.nome.toLowerCase()}">
+          <h3>${p.categoria === "Streaming" ? "📺" : "🌐"} ${p.nome}</h3>
+          <div class="preco">R$ ${p.preco}</div>
+          <button onclick="comprar('${p.nome}',${p.preco})">Comprar</button>
+        </div>`;
+      }
+    });
+
+    document.getElementById("listaProdutos").innerHTML = html || "Nenhum produto cadastrado.";
+  });
+}
+
+carregarProdutos();
 
 window.comprar = function(produto, preco){
   produtoAtual = produto;
   precoAtual = preco;
   document.getElementById("pagamento").style.display = "block";
-  document.getElementById("produtoEscolhido").innerText = `Produto: ${produto} | Valor: R$ ${preco}`;
+  document.getElementById("produtoEscolhido").innerText =
+    `Produto: ${produto} | Valor: R$ ${preco}`;
 };
 
 window.enviarPedido = async function(){
@@ -160,25 +175,20 @@ window.enviarPedido = async function(){
     return;
   }
 
-  await addDoc(collection(db, "pedidos"), {
+  await addDoc(collection(db,"pedidos"),{
     clienteNome,
     produto: produtoAtual,
     preco: precoAtual,
     nomePix,
     formaEntrega,
     contatoEntrega,
-    status: "Processando pagamento",
+    status:"Processando pagamento",
     criadoEm: serverTimestamp()
   });
 
   document.getElementById("statusArea").innerHTML =
     '<div class="status">⏳ Processando pagamento... Aguarde enquanto verificamos seu pagamento.</div>';
 };
-
-if(location.search.includes("admin")){
-  document.getElementById("site").style.display = "none";
-  document.getElementById("adminArea").style.display = "block";
-}
 
 window.loginAdmin = function(){
   if(document.getElementById("senhaAdmin").value !== "1234"){
@@ -187,35 +197,39 @@ window.loginAdmin = function(){
   }
 
   document.getElementById("painelAdmin").style.display = "block";
+  carregarPedidosAdmin();
+  carregarProdutosAdmin();
+};
 
-  onSnapshot(collection(db, "pedidos"), (snap) => {
-    let total = 0, processando = 0, confirmados = 0, entregues = 0, faturamento = 0;
-    let html = "";
+function carregarPedidosAdmin(){
+  onSnapshot(collection(db,"pedidos"), snap => {
+    let total=0, processando=0, confirmados=0, entregues=0, faturamento=0;
+    let html="";
 
-    snap.forEach((d) => {
+    snap.forEach(d => {
       const p = d.data();
       total++;
 
-      if(p.status === "Processando pagamento") processando++;
-      if(p.status === "Pagamento confirmado") confirmados++;
-      if(p.status === "Entregue") entregues++;
-      if(p.status === "Entregue") faturamento += Number(p.preco || 0);
+      if(p.status==="Processando pagamento") processando++;
+      if(p.status==="Pagamento confirmado") confirmados++;
+      if(p.status==="Entregue"){
+        entregues++;
+        faturamento += Number(p.preco || 0);
+      }
 
       html += `
-        <div class="pedido">
-          <b>${p.clienteNome}</b><br>
-          Produto: ${p.produto}<br>
-          Valor: R$ ${p.preco}<br>
-          Nome Pix: ${p.nomePix}<br>
-          Entrega: ${p.formaEntrega}<br>
-          Contato: ${p.contatoEntrega || "Chat da plataforma"}<br>
-          Status: <b>${p.status}</b><br>
-
-          <button onclick="atualizarStatus('${d.id}','Pagamento confirmado')">Confirmar pagamento</button>
-          <button onclick="atualizarStatus('${d.id}','Recusado')">Recusar</button>
-          <button onclick="atualizarStatus('${d.id}','Entregue')">Marcar entregue</button>
-        </div>
-      `;
+      <div class="pedido">
+        <b>${p.clienteNome}</b><br>
+        Produto: ${p.produto}<br>
+        Valor: R$ ${p.preco}<br>
+        Nome Pix: ${p.nomePix}<br>
+        Entrega: ${p.formaEntrega}<br>
+        Contato: ${p.contatoEntrega || "Chat da plataforma"}<br>
+        Status: <b>${p.status}</b><br>
+        <button onclick="atualizarStatus('${d.id}','Pagamento confirmado')">Confirmar</button>
+        <button onclick="atualizarStatus('${d.id}','Recusado')">Recusar</button>
+        <button onclick="atualizarStatus('${d.id}','Entregue')">Entregue</button>
+      </div>`;
     });
 
     document.getElementById("totalPedidos").innerText = total;
@@ -225,15 +239,74 @@ window.loginAdmin = function(){
     document.getElementById("faturamento").innerText = faturamento;
     document.getElementById("listaPedidos").innerHTML = html || "Nenhum pedido.";
   });
+}
+
+window.atualizarStatus = async function(id,status){
+  await updateDoc(doc(db,"pedidos",id),{status});
 };
 
-window.atualizarStatus = async function(id, status){
-  await updateDoc(doc(db, "pedidos", id), { status });
+window.salvarProduto = async function(){
+  const nome = document.getElementById("produtoNome").value;
+  const preco = Number(document.getElementById("produtoPreco").value);
+  const categoria = document.getElementById("produtoCategoria").value;
+  const ativo = document.getElementById("produtoStatus").value === "true";
+
+  if(!nome || !preco){
+    alert("Preencha nome e preço.");
+    return;
+  }
+
+  await addDoc(collection(db,"produtos"),{
+    nome,
+    preco,
+    categoria,
+    ativo,
+    criadoEm: serverTimestamp()
+  });
+
+  document.getElementById("produtoNome").value="";
+  document.getElementById("produtoPreco").value="";
+  alert("Produto salvo!");
+};
+
+function carregarProdutosAdmin(){
+  onSnapshot(collection(db,"produtos"), snap => {
+    let html="";
+
+    snap.forEach(d => {
+      const p = d.data();
+
+      html += `
+      <div class="produtoAdmin">
+        <b>${p.nome}</b><br>
+        Preço: R$ ${p.preco}<br>
+        Categoria: ${p.categoria}<br>
+        Status: ${p.ativo ? "Ativo" : "Inativo"}<br>
+        <button onclick="alternarProduto('${d.id}',${p.ativo ? "false" : "true"})">
+          ${p.ativo ? "Desativar" : "Ativar"}
+        </button>
+        <button onclick="excluirProduto('${d.id}')">Excluir</button>
+      </div>`;
+    });
+
+    document.getElementById("listaProdutosAdmin").innerHTML =
+      html || "Nenhum produto cadastrado.";
+  });
+}
+
+window.alternarProduto = async function(id, ativo){
+  await updateDoc(doc(db,"produtos",id),{ativo});
+};
+
+window.excluirProduto = async function(id){
+  if(confirm("Excluir este produto?")){
+    await deleteDoc(doc(db,"produtos",id));
+  }
 };
 
 window.buscar = function(txt){
   txt = txt.toLowerCase();
-  document.querySelectorAll(".produto").forEach(p => {
+  document.querySelectorAll(".produto").forEach(p=>{
     p.style.display = p.dataset.nome.includes(txt) ? "block" : "none";
   });
 };
