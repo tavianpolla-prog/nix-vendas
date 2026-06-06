@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nix Vendas</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
+body{
+background:#0b1020;
+color:white;
+}
+
+header{
+padding:20px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#10182d;
+position:sticky;
+top:0;
+}
+
+.logo{
+font-size:32px;
+font-weight:800;
+color:#00e08f;
+}
+
+.menu a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+}
+
+.hero{
+min-height:90vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:30px;
+background:
+linear-gradient(135deg,#0b1020,#16213e);
+}
+
+.hero h1{
+font-size:60px;
+margin-bottom:20px;
+}
+
+.hero p{
+max-width:700px;
+font-size:20px;
+color:#d0d0d0;
+margin-bottom:30px;
+}
+
+.botao{
+background:#00e08f;
+color:#000;
+padding:15px 35px;
+border-radius:50px;
+font-weight:bold;
+text-decoration:none;
+}
+
+.secao{
+padding:80px 8%;
+text-align:center;
+}
+
+.secao h2{
+font-size:42px;
+margin-bottom:20px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+margin-top:40px;
+}
+
+.card{
+background:#141c33;
+padding:30px;
+border-radius:20px;
+}
+
+.card h3{
+margin-bottom:10px;
+color:#00e08f;
+}
+
+.plano{
+background:#141c33;
+padding:30px;
+border-radius:20px;
+}
+
+.preco{
+font-size:45px;
+font-weight:bold;
+color:#00e08f;
+margin:15px 0;
+}
+
+footer{
+background:#10182d;
+padding:25px;
+text-align:center;
+color:#aaa;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+Nix Vendas
+</div>
+
+<div class="menu">
+<a href="#beneficios">Benefícios</a>
+<a href="#planos">Planos</a>
+<a href="#contato">Contato</a>
+</div>
+
+</header>
+
+<section class="hero">
+
+<h1>Transforme visitantes em clientes</h1>
+
+<p>
+Crie autoridade, gere confiança e aumente suas vendas
+com uma página profissional feita para converter.
+</p>
+
+<a href="#planos" class="botao">
+COMEÇAR AGORA
+</a>
+
+</section>
+
+<section class="secao" id="beneficios">
+
+<h2>Por que escolher a Nix Vendas?</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>Alta Conversão</h3>
+<p>Páginas criadas para gerar mais vendas.</p>
+</div>
+
+<div class="card">
+<h3>Design Premium</h3>
+<p>Visual moderno e profissional.</p>
+</div>
+
+<div class="card">
+<h3>Carregamento Rápido</h3>
+<p>Experiência perfeita em celular e computador.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="secao" id="planos">
+
+<h2>Planos</h2>
+
+<div class="cards">
+
+<div class="plano">
+<h3>Básico</h3>
+<div class="preco">R$97</div>
+<p>Landing page simples.</p>
+</div>
+
+<div class="plano">
+<h3>Profissional</h3>
+<div class="preco">R$197</div>
+<p>Estrutura completa de vendas.</p>
+</div>
+
+<div class="plano">
+<h3>Premium</h3>
+<div class="preco">R$397</div>
+<p>Projeto personalizado.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="secao" id="contato">
+
+<h2>Pronto para vender mais?</h2>
+
+<p style="margin-top:20px;color:#ccc;">
+Entre em contato e solicite seu projeto.
+</p>
+
+</section>
+
+<footer>
+
+© 2026 Nix Vendas - Todos os direitos reservados
+
+</footer>
+
+</body>
+</html>
