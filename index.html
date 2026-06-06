@@ -6,352 +6,162 @@
 <title>ST Streaming</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-body{
-background:#080811;
-color:white;
-}
-
-header{
-background:#11112b;
-padding:20px;
-text-align:center;
-position:sticky;
-top:0;
-z-index:999;
-}
-
-.logo{
-font-size:34px;
-font-weight:900;
-color:#b84cff;
-}
-
-.hero{
-padding:90px 20px;
-text-align:center;
-background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.8)),url('imagens/banner.png');
-background-size:cover;
-background-position:center;
-}
-
-.hero h1{
-font-size:45px;
-margin-bottom:10px;
-}
-
-.hero p{
-color:#ddd;
-}
-
-.categorias{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:20px;
-padding:40px 20px;
-max-width:1200px;
-margin:auto;
-}
-
-.card{
-background:#16163a;
-border:1px solid #7b32ff;
-border-radius:20px;
-padding:30px;
-cursor:pointer;
-transition:.3s;
-}
-
-.card:hover{
-transform:translateY(-5px);
-}
-
-.card h2{
-color:#b84cff;
-margin-bottom:10px;
-}
-
-.area{
-display:none;
-padding:30px;
-}
-
-.produto{
-background:#16163a;
-border:1px solid #7b32ff;
-padding:20px;
-border-radius:15px;
-margin-bottom:15px;
-}
-
-.preco{
-font-size:28px;
-font-weight:900;
-color:#b84cff;
-margin-top:10px;
-}
-
-.btn{
-background:#b84cff;
-color:white;
-border:none;
-padding:12px 20px;
-border-radius:30px;
-margin-top:10px;
-cursor:pointer;
-}
-
-.pagamento{
-display:none;
-padding:30px;
-max-width:700px;
-margin:auto;
-}
-
-input{
-width:100%;
-padding:14px;
-border:none;
-border-radius:10px;
-margin-top:10px;
-}
-
-.status{
-background:#16163a;
-padding:20px;
-border-radius:15px;
-margin-top:20px;
-text-align:center;
-}
-
-footer{
-background:#11112b;
-padding:20px;
-text-align:center;
-margin-top:40px;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:linear-gradient(180deg,#09b6c8,#037b8c);color:#123}
+header{height:90px;background:white;display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+.logo{font-size:30px;font-weight:900;color:#12aeca;letter-spacing:3px}
+.menu{font-size:34px;color:#123}
+.hero{text-align:center;padding:70px 20px 40px}
+.saldo{display:inline-block;background:#12bddd;color:white;font-size:32px;font-weight:900;padding:22px 35px;border-radius:6px}
+.box{background:white;margin:15px auto 90px;max-width:760px;border-radius:6px;padding:28px;box-shadow:0 10px 35px #0002}
+.search{border:1px solid #9bd6df;background:#f3fbfc;padding:18px;font-size:20px;margin-bottom:25px}
+.search input{border:0;background:transparent;font-size:20px;width:85%;outline:none}
+label{font-weight:900;font-size:20px;color:#11384a}
+.select{border:1px solid #9bd6df;margin:12px 0 20px;padding:15px;background:#f3fbfc;font-size:19px}
+.produto{border-bottom:1px solid #ddd;padding:18px 0}
+.produto h3{font-size:22px;color:#089bb4}
+.produto p{font-size:17px;margin:7px 0;color:#18425a}
+.preco{font-size:24px;font-weight:900;color:#0aaec9}
+button{background:#08b8d4;color:white;border:0;padding:13px 24px;border-radius:6px;font-size:18px;font-weight:900;margin-top:10px}
+.pagamento{display:none;background:#f3fbfc;border:1px solid #9bd6df;padding:20px;margin-top:20px}
+input{width:100%;padding:14px;border:1px solid #9bd6df;margin:8px 0;font-size:17px}
+.status{background:#e8fbff;border:1px solid #9bd6df;padding:18px;margin-top:15px}
+.float{position:fixed;bottom:35px;width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:34px;font-weight:900;text-decoration:none}
+.whats{left:28px;background:#25d366}
+.chat{right:28px;background:#005cff}
+footer{text-align:center;color:white;padding:25px}
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="logo">ST Streaming</div>
+<div class="logo">ST STREAMING</div>
+<div class="menu">☰</div>
 </header>
 
 <section class="hero">
-<h1>Seu Universo Digital</h1>
-<p>Streaming e Serviços Digitais em um só lugar.</p>
+<div class="saldo">Adicionar Saldo</div>
 </section>
 
-<div class="categorias">
+<div class="box">
 
-<div class="card" onclick="abrirStreaming()">
-<h2>📺 Streaming</h2>
-<p>Netflix, Disney+, HBO Max, Prime Video e muito mais.</p>
-</div>
+<div class="search">🔍 <input placeholder="Procurar" onkeyup="buscar(this.value)"></div>
 
-<div class="card" onclick="abrirServicos()">
-<h2>💻 Serviços Digitais</h2>
-<p>WhatsApp, Telegram, Discord, iFood e Tinder.</p>
-</div>
+<label>Categoria</label>
+<div class="select" onclick="mostrar('streaming')">📺 Streaming</div>
+<div class="select" onclick="mostrar('servicos')">💻 Serviços Digitais</div>
 
-</div><div id="streaming" class="area">
-
-<h2>📺 Streaming</h2>
-
-<div class="produto">
-Netflix
+<div id="streaming">
+<div class="produto" data-nome="netflix">
+<h3>📺 Netflix</h3>
+<p>Plano digital com entrega após confirmação.</p>
 <div class="preco">R$ 9,00</div>
-<button class="btn" onclick="comprar('Netflix')">Comprar</button>
+<button onclick="comprar('Netflix')">Comprar</button>
 </div>
 
-<div class="produto">
-Disney+
+<div class="produto" data-nome="disney">
+<h3>🎬 Disney+</h3>
+<p>Assinatura digital para filmes e séries.</p>
 <div class="preco">R$ 8,00</div>
-<button class="btn" onclick="comprar('Disney+')">Comprar</button>
+<button onclick="comprar('Disney+')">Comprar</button>
 </div>
 
-<div class="produto">
-Prime Video
-<div class="preco">R$ 8,00</div>
-<button class="btn" onclick="comprar('Prime Video')">Comprar</button>
-</div>
-
-<div class="produto">
-HBO Max
+<div class="produto" data-nome="hbo max">
+<h3>🍿 HBO Max</h3>
+<p>Streaming premium com suporte.</p>
 <div class="preco">R$ 10,00</div>
-<button class="btn" onclick="comprar('HBO Max')">Comprar</button>
+<button onclick="comprar('HBO Max')">Comprar</button>
 </div>
 
-<div class="produto">
-Crunchyroll
-<div class="preco">R$ 7,00</div>
-<button class="btn" onclick="comprar('Crunchyroll')">Comprar</button>
+<div class="produto" data-nome="prime video">
+<h3>▶️ Prime Video</h3>
+<p>Plano digital com liberação rápida.</p>
+<div class="preco">R$ 8,00</div>
+<button onclick="comprar('Prime Video')">Comprar</button>
+</div>
 </div>
 
-</div>
-
-<div id="servicos" class="area">
-
-<h2>💻 Serviços Digitais</h2>
-
-<div class="produto">
-WhatsApp
+<div id="servicos" style="display:none">
+<div class="produto" data-nome="whatsapp">
+<h3>📱 WhatsApp</h3>
+<p>Serviço digital com atendimento após pagamento.</p>
 <div class="preco">R$ 15,00</div>
-<button class="btn" onclick="comprar('WhatsApp')">Comprar</button>
+<button onclick="comprar('WhatsApp')">Comprar</button>
 </div>
 
-<div class="produto">
-Telegram
+<div class="produto" data-nome="telegram">
+<h3>✈️ Telegram</h3>
+<p>Serviço digital com suporte.</p>
 <div class="preco">R$ 15,00</div>
-<button class="btn" onclick="comprar('Telegram')">Comprar</button>
+<button onclick="comprar('Telegram')">Comprar</button>
 </div>
 
-<div class="produto">
-Discord
+<div class="produto" data-nome="discord">
+<h3>🎮 Discord</h3>
+<p>Serviço digital personalizado.</p>
 <div class="preco">R$ 15,00</div>
-<button class="btn" onclick="comprar('Discord')">Comprar</button>
+<button onclick="comprar('Discord')">Comprar</button>
 </div>
 
-<div class="produto">
-iFood
+<div class="produto" data-nome="ifood">
+<h3>🍔 iFood</h3>
+<p>Serviço digital sob consulta.</p>
 <div class="preco">R$ 20,00</div>
-<button class="btn" onclick="comprar('iFood')">Comprar</button>
+<button onclick="comprar('iFood')">Comprar</button>
 </div>
 
-<div class="produto">
-Tinder
+<div class="produto" data-nome="tinder">
+<h3>❤️ Tinder</h3>
+<p>Serviço digital sob atendimento.</p>
 <div class="preco">R$ 20,00</div>
-<button class="btn" onclick="comprar('Tinder')">Comprar</button>
+<button onclick="comprar('Tinder')">Comprar</button>
 </div>
-
 </div>
 
 <div id="pagamento" class="pagamento">
-
 <h2>💳 Confirmação de Pagamento</h2>
-
-<p>
-Após realizar o pagamento via Pix,
-informe abaixo o nome utilizado na transferência.
-</p>
-
-<input id="nomePix" placeholder="Nome usado no pagamento">
-
+<p id="produtoEscolhido"></p>
 <input value="71994141667" readonly>
-
-<button class="btn" onclick="confirmarPagamento()">
-Confirmar Pagamento
-</button>
-
-<div id="statusArea"></div>
-
-</div><div id="chatSuporte" style="display:none" class="status">
-
-<h2>💬 Suporte</h2>
-
-<p>
-Um atendente irá iniciar seu atendimento em breve.
-</p>
-
-<textarea
-placeholder="Digite sua mensagem..."
-style="width:100%;height:120px;margin-top:15px;border-radius:10px;padding:10px;">
-</textarea>
-
-<button class="btn">
-Enviar Mensagem
-</button>
+<input id="nomePix" placeholder="Nome usado no pagamento Pix">
+<button onclick="confirmar()">Confirmar Pagamento</button>
+<div id="status"></div>
+</div>
 
 </div>
 
-<footer>
-© ST Streaming
-</footer>
+<a class="float whats" href="#">☎</a>
+<a class="float chat" href="#">✉</a>
+
+<footer>© ST Streaming</footer>
 
 <script>
-
-function abrirStreaming(){
-document.getElementById("streaming").style.display="block";
-document.getElementById("servicos").style.display="none";
-document.getElementById("pagamento").style.display="none";
-}
-
-function abrirServicos(){
-document.getElementById("servicos").style.display="block";
-document.getElementById("streaming").style.display="none";
-document.getElementById("pagamento").style.display="none";
+function mostrar(tipo){
+document.getElementById("streaming").style.display=tipo==="streaming"?"block":"none";
+document.getElementById("servicos").style.display=tipo==="servicos"?"block":"none";
 }
 
 function comprar(produto){
-
-localStorage.setItem("produtoSelecionado",produto);
-
 document.getElementById("pagamento").style.display="block";
-
-window.scrollTo({
-top:document.getElementById("pagamento").offsetTop,
-behavior:"smooth"
-});
-
+document.getElementById("produtoEscolhido").innerText="Produto selecionado: "+produto;
+document.getElementById("pagamento").scrollIntoView({behavior:"smooth"});
 }
 
-function confirmarPagamento(){
-
+function confirmar(){
 let nome=document.getElementById("nomePix").value;
-
-if(nome==""){
-alert("Informe o nome usado no pagamento");
-return;
+if(!nome){alert("Digite o nome usado no pagamento");return}
+document.getElementById("status").innerHTML='<div class="status">⏳ Processando pagamento... Aguarde enquanto verificamos seu pagamento.</div>';
+setTimeout(()=>{
+document.getElementById("status").innerHTML='<div class="status">✅ Pagamento confirmado. Um atendente irá iniciar seu atendimento em breve.</div>';
+},4000);
 }
 
-document.getElementById("statusArea").innerHTML=`
-
-<div class="status">
-
-<h3>⏳ Processando pagamento...</h3>
-
-<p>
-Recebemos sua solicitação e estamos verificando o pagamento em nosso sistema.
-</p>
-
-</div>
-
-`;
-
-setTimeout(function(){
-
-document.getElementById("statusArea").innerHTML=`
-
-<div class="status">
-
-<h3>✅ Pagamento Confirmado</h3>
-
-<p>
-Seu pagamento foi localizado com sucesso.
-</p>
-
-<p>
-Um atendente irá iniciar seu atendimento em breve.
-</p>
-
-</div>
-
-`;
-
-document.getElementById("chatSuporte").style.display="block";
-
-},5000);
-
+function buscar(txt){
+txt=txt.toLowerCase();
+document.querySelectorAll(".produto").forEach(p=>{
+p.style.display=p.dataset.nome.includes(txt)?"block":"none";
+});
 }
-
 </script>
 
 </body>
