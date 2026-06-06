@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nix Vendas</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#070914;color:white}
+header{padding:20px;text-align:center;background:#0d1024}
+.logo{font-size:32px;font-weight:900;color:#.+_
+}
+.hero h1{font-size:42px;margin-bottom:15px}
+.hero p{color:#ccc;font-size:18px}
+.btn{display:inline-block;margin-top:20px;background:#00d9ff;color:#000;padding:14px 25px;border-radius:30px;text-decoration:none;font-weight:bold}
+section{padding:45px 20px;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px;margin-top:30px}
+.card{background:#121735;border:1px solid #26306b;border-radius:18px;padding:22px}
+.card h3{font-size:22px;margin-bottom:10px}
+.preco{color:#00d9ff;font-size:28px;font-weight:bold;margin:10px 0}
+.pix{background:#10152f;border-radius:20px;padding:25px;margin-top:25px}
+input{width:100%;padding:14px;border-radius:10px;border:none;margin:10px 0}
+footer{padding:25px;text-align:center;background:#0d1024;color:#aaa}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">Nix Vendas</div>
+</header>
+
+<div class="hero">.hero{
+padding:70px 20px;
+text-align:center;
+background:url('imagens/banner.png');
+background-size:cover;
+background-position:center;
+border-radius:20px;
+
+
+<h1>Streaming com praticidade</h1>
+<p>Escolha seu plano, faça o Pix e receba seu acesso com rapidez.</p>
+<a href="#produtos" class="btn">Ver produtos</a>
+</div>
+
+<section id="produtos">
+<h2>Catálogo</h2>
+
+<div class="grid">
+<div class="card"><h3>Netflix</h3><div class="preco">R$ 25,00</div><a href="#pix" class="btn">Comprar</a></div>
+<div class="card"><h3>Disney+</h3><div class="preco">R$ 20,00</div><a href="#pix" class="btn">Comprar</a></div>
+<div class="card"><h3>Globoplay</h3><div class="preco">R$ 20,00</div><a href="#pix" class="btn">Comprar</a></div>
+<div class="card"><h3>Paramount+</h3><div class="preco">R$ 15,00</div><a href="#pix" class="btn">Comprar</a></div>
+<div class="card"><h3>Prime Video</h3><div class="preco">R$ 15,00</div><a href="#pix" class="btn">Comprar</a></div>
+<div class="card"><h3>Crunchyroll</h3><div class="preco">R$ 15,00</div><a href="#pix" class="btn">Comprar</a></div>
+<div class="card"><h3>HBO Max</h3><div class="preco">R$ 20,00</div><a href="#pix" class="btn">Comprar</a></div>
+</div>
+</section>
+
+<section id="pix">
+<h2>Pagamento via Pix</h2>
+
+<div class="pix">
+<p>Copie a chave Pix abaixo e envie o comprovante após o pagamento.</p>
+
+<input id="chavePix" value="SUA-CHAVE-PIX-AQUI" readonly>
+
+<button class="btn" onclick="copiarPix()">Copiar chave Pix</button>
+
+<p style="margin-top:20px;color:#ccc;">
+Após pagar, envie o comprovante para receber seu acesso.
+</p>
+</div>
+</section>
+
+<footer>
+© 2026 Nix Vendas - Todos os direitos reservados
+</footer>
+
+<script>
+function copiarPix(){
+  const pix = document.getElementById("chavePix");
+  pix.select();
+  pix.setSelectionRange(0,99999);
+  document.execCommand("copy");
+  alert("Chave Pix copiada!");
+}
+</script>
+
+</body>
+</html>71994141667
+
+
+ls ~/meusite/imagens
+
