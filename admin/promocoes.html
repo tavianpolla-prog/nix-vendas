@@ -49,6 +49,12 @@ margin-top:10px;
 border-radius:8px;
 font-weight:bold;
 cursor:pointer;
+margin-right:5px;
+}
+
+.excluir{
+background:#dc3545;
+color:white;
 }
 
 .banner{
@@ -57,10 +63,11 @@ color:black;
 padding:15px;
 border-radius:10px;
 font-weight:bold;
-margin-top:15px;
+margin-top:10px;
 }
 </style>
 </head>
+
 <body>
 
 <a href="dashboard.html">⬅ Voltar ao Dashboard</a>
@@ -71,13 +78,13 @@ margin-top:15px;
 
 <h2>Nova Promoção</h2>
 
-<input placeholder="Título da promoção">
+<input id="titulo" placeholder="Título da promoção">
 
-<textarea placeholder="Descrição da promoção"></textarea>
+<textarea id="descricao" placeholder="Descrição da promoção"></textarea>
 
-<input type="date">
+<input id="validade" type="date">
 
-<button>Salvar Promoção</button>
+<button onclick="criarPromo()">Criar Promoção</button>
 
 </div>
 
@@ -85,9 +92,8 @@ margin-top:15px;
 
 <h2>Pré-visualização</h2>
 
-<div class="banner">
-🔥 Netflix por R$ 7,99<br>
-Promoção válida até domingo.
+<div class="banner" id="preview">
+🔥 Sua promoção aparecerá aqui
 </div>
 
 </div>
@@ -96,15 +102,48 @@ Promoção válida até domingo.
 
 <h2>Promoções Ativas</h2>
 
+<div id="listaPromocoes">
+
 <div class="banner">
-🎉 Combo Streaming<br>
-20% OFF em compras acima de R$ 30.
+🎉 Netflix Premium<br>
+20% OFF até domingo
 </div>
 
 <button>Editar</button>
 <button>Desativar</button>
+<button class="excluir">Excluir</button>
 
 </div>
 
+</div>
+
+<script>
+
+function criarPromo(){
+
+const titulo =
+document.getElementById("titulo").value;
+
+const descricao =
+document.getElementById("descricao").value;
+
+const validade =
+document.getElementById("validade").value;
+
+if(!titulo){
+alert("Digite um título.");
+return;
+}
+
+document.getElementById("preview").innerHTML =
+`🔥 ${titulo}<br>${descricao}<br>Válida até ${validade}`;
+
+alert("Promoção criada com sucesso!");
+
+}
+
+</script>
+
 </body>
 </html>
+
