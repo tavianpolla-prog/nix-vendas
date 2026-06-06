@@ -6,53 +6,141 @@
 <title>Produtos - ST Admin</title>
 
 <style>
-body{
-background:#0b0b0b;
-color:#d4af37;
-font-family:Arial,sans-serif;
-padding:20px;
-}
-
-h1{
-margin-bottom:20px;
-}
-
-.card{
-background:#151515;
-border:1px solid #d4af37;
-padding:18px;
-border-radius:10px;
-margin-bottom:12px;
-font-size:18px;
-font-weight:bold;
-}
-
-a{
-color:#d4af37;
-text-decoration:none;
-}
+body{background:#0b0b0b;color:white;font-family:Arial,sans-serif;padding:20px}
+h1,h2{color:#d4af37}
+a{color:#d4af37;text-decoration:none}
+.card{background:#151515;border:1px solid #d4af37;padding:15px;border-radius:10px;margin-bottom:15px}
+input,select{width:100%;padding:12px;margin-top:8px;background:#222;border:1px solid #d4af37;color:white;border-radius:8px}
+button{background:#d4af37;color:black;border:0;padding:12px;margin-top:10px;border-radius:8px;font-weight:bold;cursor:pointer}
+.excluir{background:#dc3545;color:white}
+.inativo{background:#555;color:white}
+.produto{background:#151515;border:1px solid #d4af37;padding:15px;border-radius:10px;margin-bottom:12px}
 </style>
 </head>
+
 <body>
-
-<h1>📦 Gerenciar Produtos</h1>
-
-<div class="card">➕ Adicionar Produto</div>
-
-<div class="card">✏️ Editar Produto</div>
-
-<div class="card">💰 Alterar Preço</div>
-
-<div class="card">📦 Alterar Estoque</div>
-
-<div class="card">🚫 Ativar / Desativar</div>
-
-<div class="card">🗑️ Excluir Produto</div>
-
-<br>
 
 <a href="dashboard.html">⬅ Voltar ao Dashboard</a>
 
+<h1>📦 Gerenciar Produtos</h1>
+
+<div class="card">
+<h2>Adicionar Produto</h2>
+
+<input id="nome" placeholder="Nome do produto">
+<input id="preco" type="number" placeholder="Preço">
+<input id="estoque" type="number" placeholder="Estoque">
+
+<select id="categoria">
+<option>Streaming</option>
+<option>Serviços Sociais</option>
+</select>
+
+<select id="ativo">
+<option value="true">Ativo</option>
+<option value="false">Inativo</option>
+</select>
+
+<button onclick="salvarProduto()">Salvar Produto</button>
+</div>
+
+<h2>Produtos cadastrados</h2>
+<div id="listaProdutos">Carregando...</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey:"AIzaSyBDmMHv_QDAgpJROzMiDlqSyahhRcWL1v0",
+authDomain:"st-streaming-9acd9.firebaseapp.com",
+projectId:"st-streaming-9acd9",
+storageBucket:"st-streaming-9acd9.firebasestorage.app",
+messagingSenderId:"695341762827",
+appId:"1:695341762827:web:d68e0e626e83f8b2e83a0e"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.salvarProduto = async function(){
+const nome = document.getElementById("nome").value;
+const preco = Number(document.getElementById("preco").value);
+const estoque = Number(document.getElementById("estoque").value);
+const categoria = document.getElementById("categoria").value;
+const ativo = document.getElementById("ativo").value === "true";
+
+if(!nome || !preco){
+alert("Preencha nome e preço.");
+return;
+}
+
+await addDoc(collection(db,"produtos"),{
+nome,
+preco,
+estoque,
+categoria,
+ativo,
+criadoEm: serverTimestamp()
+});
+
+document.getElementById("nome").value="";
+document.getElementById("preco").value="";
+document.getElementById("estoque").value="";
+
+alert("Produto salvo!");
+};
+
+onSnapshot(collection(db,"produtos"), snap => {
+let html = "";
+
+snap.forEach(d => {
+const p = d.data();
+
+html += `
+<div class="produto">
+<b>${p.nome}</b><br>
+Preço: R$ ${p.preco}<br>
+Estoque: ${p.estoque || 0}<br>
+Categoria: ${p.categoria}<br>
+Status: ${p.ativo ? "Ativo" : "Inativo"}<br>
+
+<button onclick="editarPreco('${d.id}')">💰 Editar Preço</button>
+<button onclick="editarEstoque('${d.id}')">📦 Editar Estoque</button>
+<button class="inativo" onclick="alternarStatus('${d.id}', ${p.ativo ? "false" : "true"})">
+${p.ativo ? "Desativar" : "Ativar"}
+</button>
+<button class="excluir" onclick="excluirProduto('${d.id}')">🗑️ Excluir</button>
+</div>`;
+});
+
+document.getElementById("listaProdutos").innerHTML = html || "Nenhum produto cadastrado.";
+});
+
+window.editarPreco = async function(id){
+const novo = prompt("Novo preço:");
+if(novo){
+await updateDoc(doc(db,"produtos",id),{preco:Number(novo)});
+}
+};
+
+window.editarEstoque = async function(id){
+const novo = prompt("Novo estoque:");
+if(novo){
+await updateDoc(doc(db,"produtos",id),{estoque:Number(novo)});
+}
+};
+
+window.alternarStatus = async function(id, ativo){
+await updateDoc(doc(db,"produtos",id),{ativo});
+};
+
+window.excluirProduto = async function(id){
+if(confirm("Excluir este produto?")){
+await deleteDoc(doc(db,"produtos",id));
+}
+};
+</script>
+
 </body>
 </html>
-
