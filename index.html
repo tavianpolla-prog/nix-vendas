@@ -4,227 +4,80 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nix Vendas</title>
-
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial, sans-serif;
-}
-
-body{
-background:#0b1020;
-color:white;
-}
-
-header{
-padding:20px 8%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:#10182d;
-position:sticky;
-top:0;
-}
-
-.logo{
-font-size:32px;
-font-weight:800;
-color:#00e08f;
-}
-
-.menu a{
-color:white;
-text-decoration:none;
-margin-left:20px;
-}
-
-.hero{
-min-height:90vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:30px;
-background:
-linear-gradient(135deg,#0b1020,#16213e);
-}
-
-.hero h1{
-font-size:60px;
-margin-bottom:20px;
-}
-
-.hero p{
-max-width:700px;
-font-size:20px;
-color:#d0d0d0;
-margin-bottom:30px;
-}
-
-.botao{
-background:#00e08f;
-color:#000;
-padding:15px 35px;
-border-radius:50px;
-font-weight:bold;
-text-decoration:none;
-}
-
-.secao{
-padding:80px 8%;
-text-align:center;
-}
-
-.secao h2{
-font-size:42px;
-margin-bottom:20px;
-}
-
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-margin-top:40px;
-}
-
-.card{
-background:#141c33;
-padding:30px;
-border-radius:20px;
-}
-
-.card h3{
-margin-bottom:10px;
-color:#00e08f;
-}
-
-.plano{
-background:#141c33;
-padding:30px;
-border-radius:20px;
-}
-
-.preco{
-font-size:45px;
-font-weight:bold;
-color:#00e08f;
-margin:15px 0;
-}
-
-footer{
-background:#10182d;
-padding:25px;
-text-align:center;
-color:#aaa;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#070914;color:white}
+header{padding:20px;text-align:center;background:#0d1024}
+.logo{font-size:32px;font-weight:900;color:#00d9ff}
+.hero{padding:70px 20px;text-align:center;background:linear-gradient(135deg,#10163a,#070914)}
+.hero h1{font-size:42px;margin-bottom:15px}
+.hero p{color:#ccc;font-size:18px}
+.btn{display:inline-block;margin-top:20px;background:#00d9ff;color:#000;padding:14px 25px;border-radius:30px;text-decoration:none;font-weight:bold}
+section{padding:45px 20px;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px;margin-top:30px}
+.card{background:#121735;border:1px solid #26306b;border-radius:18px;padding:22px}
+.card h3{font-size:22px;margin-bottom:10px}
+.preco{color:#00d9ff;font-size:28px;font-weight:bold;margin:10px 0}
+.pix{background:#10152f;border-radius:20px;padding:25px;margin-top:25px}
+input{width:100%;padding:14px;border-radius:10px;border:none;margin:10px 0}
+footer{padding:25px;text-align:center;background:#0d1024;color:#aaa}
 </style>
-
 </head>
-
 <body>
 
 <header>
-
-<div class="logo">
-Nix Vendas
-</div>
-
-<div class="menu">
-<a href="#beneficios">Benefícios</a>
-<a href="#planos">Planos</a>
-<a href="#contato">Contato</a>
-</div>
-
+<div class="logo">Nix Vendas</div>
 </header>
 
-<section class="hero">
+<div class="hero">
+<h1>Streaming com praticidade</h1>
+<p>Escolha seu plano, faça o Pix e receba seu acesso com rapidez.</p>
+<a href="#produtos" class="btn">Ver produtos</a>
+</div>
 
-<h1>Transforme visitantes em clientes</h1>
+<section id="produtos">
+<h2>Catálogo</h2>
 
-<p>
-Crie autoridade, gere confiança e aumente suas vendas
-com uma página profissional feita para converter.
-</p>
-
-<a href="#planos" class="botao">
-COMEÇAR AGORA
-</a>
-
+<div class="grid">
+<div class="card"><h3>Netflix</h3><div class="preco">R$ 25,00</div><a href="#pix" class="btn">Comprar</a></div>
+<div class="card"><h3>Disney+</h3><div class="preco">R$ 20,00</div><a href="#pix" class="btn">Comprar</a></div>
+<div class="card"><h3>Globoplay</h3><div class="preco">R$ 20,00</div><a href="#pix" class="btn">Comprar</a></div>
+<div class="card"><h3>Paramount+</h3><div class="preco">R$ 15,00</div><a href="#pix" class="btn">Comprar</a></div>
+<div class="card"><h3>Prime Video</h3><div class="preco">R$ 15,00</div><a href="#pix" class="btn">Comprar</a></div>
+<div class="card"><h3>Crunchyroll</h3><div class="preco">R$ 15,00</div><a href="#pix" class="btn">Comprar</a></div>
+<div class="card"><h3>HBO Max</h3><div class="preco">R$ 20,00</div><a href="#pix" class="btn">Comprar</a></div>
+</div>
 </section>
 
-<section class="secao" id="beneficios">
+<section id="pix">
+<h2>Pagamento via Pix</h2>
 
-<h2>Por que escolher a Nix Vendas?</h2>
+<div class="pix">
+<p>Copie a chave Pix abaixo e envie o comprovante após o pagamento.</p>
 
-<div class="cards">
+<input id="chavePix" value="SUA-CHAVE-PIX-AQUI" readonly>
 
-<div class="card">
-<h3>Alta Conversão</h3>
-<p>Páginas criadas para gerar mais vendas.</p>
-</div>
-
-<div class="card">
-<h3>Design Premium</h3>
-<p>Visual moderno e profissional.</p>
-</div>
-
-<div class="card">
-<h3>Carregamento Rápido</h3>
-<p>Experiência perfeita em celular e computador.</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="secao" id="planos">
-
-<h2>Planos</h2>
-
-<div class="cards">
-
-<div class="plano">
-<h3>Básico</h3>
-<div class="preco">R$97</div>
-<p>Landing page simples.</p>
-</div>
-
-<div class="plano">
-<h3>Profissional</h3>
-<div class="preco">R$197</div>
-<p>Estrutura completa de vendas.</p>
-</div>
-
-<div class="plano">
-<h3>Premium</h3>
-<div class="preco">R$397</div>
-<p>Projeto personalizado.</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="secao" id="contato">
-
-<h2>Pronto para vender mais?</h2>
+<button class="btn" onclick="copiarPix()">Copiar chave Pix</button>
 
 <p style="margin-top:20px;color:#ccc;">
-Entre em contato e solicite seu projeto.
+Após pagar, envie o comprovante para receber seu acesso.
 </p>
-
+</div>
 </section>
 
 <footer>
-
 © 2026 Nix Vendas - Todos os direitos reservados
-
 </footer>
 
+<script>
+function copiarPix(){
+  const pix = document.getElementById("chavePix");
+  pix.select();
+  pix.setSelectionRange(0,99999);
+  document.execCommand("copy");
+  alert("Chave Pix copiada!");
+}
+</script>
+
 </body>
-</html>
+</html>71994141667
