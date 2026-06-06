@@ -8,69 +8,157 @@
 <style>
 body{
 background:#0b0b0b;
-color:#d4af37;
+color:white;
 font-family:Arial,sans-serif;
 padding:20px;
 }
 
 h1{
+color:#d4af37;
 margin-bottom:20px;
 }
 
-.card{
+.topo{
 background:#151515;
 border:1px solid #d4af37;
-padding:18px;
+padding:15px;
 border-radius:10px;
-margin-bottom:12px;
-color:white;
+margin-bottom:20px;
 }
 
-.card b{
+input,select{
+width:100%;
+padding:12px;
+margin-top:10px;
+background:#222;
+border:1px solid #d4af37;
+color:white;
+border-radius:8px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-bottom:20px;
+}
+
+.stat{
+background:#151515;
+border:1px solid #d4af37;
+padding:15px;
+border-radius:10px;
+text-align:center;
+}
+
+.numero{
+font-size:24px;
+font-weight:bold;
+color:#d4af37;
+}
+
+.pedido{
+background:#151515;
+border:1px solid #d4af37;
+padding:15px;
+border-radius:10px;
+margin-bottom:15px;
+}
+
+.pedido b{
 color:#d4af37;
 }
 
 button{
 border:0;
-padding:10px 14px;
+padding:10px;
+margin-top:8px;
+margin-right:5px;
 border-radius:6px;
 font-weight:bold;
-margin:5px 3px 0 0;
+cursor:pointer;
 }
 
-.confirmar{background:#d4af37;color:#000}
-.chat{background:#007bff;color:white}
-.entregue{background:#28a745;color:white}
-.excluir{background:#dc3545;color:white}
+.confirmar{background:#d4af37;color:black;}
+.chat{background:#0d6efd;color:white;}
+.entregue{background:#198754;color:white;}
+.arquivar{background:#6c757d;color:white;}
+.excluir{background:#dc3545;color:white;}
 
 a{
 color:#d4af37;
 text-decoration:none;
-display:block;
-margin-bottom:20px;
 }
 </style>
 </head>
-
 <body>
 
 <a href="dashboard.html">⬅ Voltar ao Dashboard</a>
 
 <h1>📋 Pedidos</h1>
 
-<div class="card">
-<b>Pedido de exemplo</b><br><br>
-Cliente: João Silva<br>
-Produto: Netflix<br>
-Valor: R$ 9,00<br>
-Nome Pix: João Silva<br>
-Entrega: WhatsApp<br>
-Status: Processando pagamento<br><br>
+<div class="topo">
+
+<input placeholder="🔍 Pesquisar pedido">
+
+<select>
+<option>Todos</option>
+<option>Processando</option>
+<option>Confirmados</option>
+<option>Entregues</option>
+</select>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="numero">3</div>
+Processando
+</div>
+
+<div class="stat">
+<div class="numero">8</div>
+Confirmados
+</div>
+
+<div class="stat">
+<div class="numero">15</div>
+Entregues
+</div>
+
+</div>
+
+<div class="pedido">
+
+<b>Cliente:</b> João Silva<br>
+<b>Produto:</b> Netflix<br>
+<b>Valor:</b> R$ 9,00<br>
+<b>Entrega:</b> WhatsApp<br>
+<b>Status:</b> Processando<br>
 
 <button class="confirmar">✅ Confirmar</button>
-<button class="chat">💬 Abrir Chat</button>
+<button class="chat">💬 Chat</button>
 <button class="entregue">📦 Entregue</button>
+<button class="arquivar">🗄️ Arquivar</button>
 <button class="excluir">🗑️ Excluir</button>
+
+</div>
+
+<div class="pedido">
+
+<b>Cliente:</b> Maria Souza<br>
+<b>Produto:</b> Discord<br>
+<b>Valor:</b> R$ 15,00<br>
+<b>Entrega:</b> Telegram<br>
+<b>Status:</b> Confirmado<br>
+
+<button class="confirmar">✅ Confirmar</button>
+<button class="chat">💬 Chat</button>
+<button class="entregue">📦 Entregue</button>
+<button class="arquivar">🗄️ Arquivar</button>
+<button class="excluir">🗑️ Excluir</button>
+
 </div>
 
 </body>
