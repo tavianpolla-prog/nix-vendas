@@ -56,7 +56,26 @@ input,select,textarea{width:100%;padding:13px;margin:8px 0;background:#222;borde
 <h2 style="color:#d4af37">💳 Finalizar Pedido</h2>
 
 <p id="produtoSelecionado"></p>
+<label>💳 Chave Pix para pagamento</label>
 
+<div style="
+background:#222;
+border:1px solid #d4af37;
+padding:12px;
+border-radius:8px;
+margin:10px 0;
+display:flex;
+justify-content:space-between;
+align-items:center;
+">
+
+<span id="pixKey">71994141667</span>
+
+<button type="button" onclick="copiarPix()">
+📋 Copiar
+</button>
+
+</div>
 <input id="clienteNome" placeholder="Seu nome">
 <input id="nomePix" placeholder="Nome usado no pagamento Pix">
 
@@ -68,13 +87,32 @@ input,select,textarea{width:100%;padding:13px;margin:8px 0;background:#222;borde
 
 <input id="contatoEntrega" placeholder="Contato para entrega">
 
-<input value="71994141667" readonly>
+<label>💳 Chave Pix para pagamento</label>
+
+<div style="
+background:#222;
+border:1px solid #d4af37;
+padding:12px;
+border-radius:8px;
+margin:10px 0;
+display:flex;
+justify-content:space-between;
+align-items:center;
+">
+
+<span id="pixKey">71994141667</span>
+
+<button type="button" onclick="copiarPix()">
+📋 Copiar
+</button>
+
+</div>
 
 <button onclick="criarPedido()">Enviar Pedido</button>
 
 <div id="statusPedido"></div>
 </div>
-
+ 
 <div id="meuPedido" class="meuPedido">
 <h2 style="color:#d4af37">📦 Meu Pedido</h2>
 <div id="infoPedido"></div>
@@ -258,6 +296,23 @@ criadoEm:serverTimestamp()
 alert("Avaliação enviada. Obrigado!");
 };
 
+window.copiarPix = function(){
+
+const chave = document.getElementById("pixKey").innerText;
+
+navigator.clipboard.writeText(chave);
+
+alert("✅ Chave Pix copiada!");
+window.copiarPix = function(){
+
+const chave = document.getElementById("pixKey").innerText;
+
+navigator.clipboard.writeText(chave);
+
+alert("✅ Chave Pix copiada!");
+
+}
+}
 carregarProdutos();
 abrirPedidoCliente();
 </script>
