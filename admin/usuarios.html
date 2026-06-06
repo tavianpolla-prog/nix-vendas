@@ -1,27 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>usuarios</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Usuários - ST Admin</title>
+
 <style>
 body{
 background:#0b0b0b;
-color:#d4af37;
-font-family:Arial;
-padding:30px;
+color:white;
+font-family:Arial,sans-serif;
+padding:20px;
 }
+
+h1,h2{
+color:#d4af37;
+}
+
 a{
 color:#d4af37;
+text-decoration:none;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin:20px 0;
+}
+
+.card{
+background:#151515;
+border:1px solid #d4af37;
+padding:15px;
+border-radius:10px;
+}
+
+.numero{
+font-size:28px;
+font-weight:bold;
+color:#d4af37;
+}
+
+.usuario{
+background:#151515;
+border:1px solid #d4af37;
+padding:15px;
+border-radius:10px;
+margin-bottom:12px;
+}
+
+.status{
+color:#00ff88;
+font-weight:bold;
+}
+
+.offline{
+color:#ff5555;
+font-weight:bold;
 }
 </style>
 </head>
 <body>
 
-<h1>👑 ST ADMIN</h1>
-
-<h2>usuarios</h2>
-
 <a href="dashboard.html">⬅ Voltar ao Dashboard</a>
+
+<h1>👥 Usuários</h1>
+
+<div class="stats">
+
+<div class="card">
+<div class="numero">15</div>
+Online Agora
+</div>
+
+<div class="card">
+<div class="numero">324</div>
+Total Clientes
+</div>
+
+<div class="card">
+<div class="numero">27</div>
+Novos Hoje
+</div>
+
+</div>
+
+<h2>Usuários Recentes</h2>
+
+<div class="usuario">
+<b>João Silva</b><br>
+Último acesso: há 2 minutos<br>
+<span class="status">● Online</span>
+</div>
+
+<div class="usuario">
+<b>Maria Souza</b><br>
+Último acesso: há 15 minutos<br>
+<span class="status">● Online</span>
+</div>
+
+<div class="usuario">
+<b>Carlos Lima</b><br>
+Último acesso: ontem<br>
+<span class="offline">● Offline</span>
+</div>
 
 </body>
 </html>
