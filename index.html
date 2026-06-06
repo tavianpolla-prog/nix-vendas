@@ -4,37 +4,37 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ST Streaming</title>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:linear-gradient(180deg,#09b6c8,#037b8c);color:#123}
 header{height:85px;background:white;display:flex;align-items:center;justify-content:space-between;padding:0 25px}
 .logo{font-size:28px;font-weight:900;color:#12aeca;letter-spacing:2px}
-.menu a{margin-left:10px;color:#123;text-decoration:none;font-weight:900}
-.hero{text-align:center;padding:60px 20px 30px}
-.saldo{display:inline-block;background:#12bddd;color:white;font-size:30px;font-weight:900;padding:20px 32px;border-radius:6px}
-.box{background:white;margin:15px auto 80px;max-width:850px;border-radius:8px;padding:25px;box-shadow:0 10px 35px #0002}
+.menu a{color:#123;text-decoration:none;font-weight:900}
+.hero{text-align:center;padding:55px 20px 25px}
+.saldo{display:inline-block;background:#12bddd;color:white;font-size:28px;font-weight:900;padding:20px 32px;border-radius:6px}
+.box{background:white;margin:15px auto 80px;max-width:900px;border-radius:8px;padding:25px;box-shadow:0 10px 35px #0002}
 .search{border:1px solid #9bd6df;background:#f3fbfc;padding:16px;font-size:20px;margin-bottom:22px}
 .search input{border:0;background:transparent;font-size:18px;width:85%;outline:none}
 .select{border:1px solid #9bd6df;margin:12px 0;padding:15px;background:#f3fbfc;font-size:19px;cursor:pointer}
-.produto,.pedido,.avaliacao{border-bottom:1px solid #ddd;padding:18px 0}
+.produto,.pedido,.avaliacao,.cliente{border-bottom:1px solid #ddd;padding:18px 0}
 .produto h3{font-size:22px;color:#089bb4}
 .preco{font-size:24px;font-weight:900;color:#0aaec9}
 button,.btn{background:#08b8d4;color:white;border:0;padding:12px 20px;border-radius:6px;font-size:17px;font-weight:900;margin-top:10px;text-decoration:none;display:inline-block}
-.pagamento,.clienteArea,.adminArea{display:none;background:#f3fbfc;border:1px solid #9bd6df;padding:20px;margin-top:20px}
+.pagamento,.adminArea{display:none;background:#f3fbfc;border:1px solid #9bd6df;padding:20px;margin-top:20px}
 input,select,textarea{width:100%;padding:13px;border:1px solid #9bd6df;margin:8px 0;font-size:16px;border-radius:6px}
 .status{background:#e8fbff;border:1px solid #9bd6df;padding:16px;margin-top:15px}
-.chatBox{height:210px;overflow:auto;background:white;border:1px solid #9bd6df;padding:12px;margin-top:12px}
-.msg{background:#e8fbff;margin:8px 0;padding:10px;border-radius:8px}
+.dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:15px 0}
+.dash div{background:#e8fbff;border:1px solid #9bd6df;padding:15px;border-radius:6px;font-weight:900}
 footer{text-align:center;color:white;padding:25px}
 </style>
 </head>
+
 <body>
 
 <header>
 <div class="logo">ST STREAMING</div>
-<div class="menu">
-<a href="?admin">Admin</a>
-</div>
+<div class="menu"><a href="?admin">Admin</a></div>
 </header>
 
 <section class="hero">
@@ -46,312 +46,197 @@ footer{text-align:center;color:white;padding:25px}
 <div class="search">🔍 <input placeholder="Procurar" onkeyup="buscar(this.value)"></div>
 
 <div class="select" onclick="mostrar('streaming')">📺 Streaming</div>
-<div class="select" onclick="mostrar('servicos')">💻 Serviços Digitais</div><div id="streaming">
+<div class="select" onclick="mostrar('sociais')">🌐 Serviços Sociais</div><div id="streaming">
+  <div class="produto" data-nome="netflix">
+    <h3>📺 Netflix</h3>
+    <div class="preco">R$ 9,00</div>
+    <button onclick="comprar('Netflix',9)">Comprar</button>
+  </div>
 
-<div class="produto" data-nome="netflix">
-<h3>📺 Netflix</h3>
-<div class="preco">R$ 9,00</div>
-<button onclick="comprar('Netflix','9,00')">Comprar</button>
+  <div class="produto" data-nome="disney">
+    <h3>🎬 Disney+</h3>
+    <div class="preco">R$ 8,00</div>
+    <button onclick="comprar('Disney+',8)">Comprar</button>
+  </div>
 </div>
 
-<div class="produto" data-nome="disney">
-<h3>🎬 Disney+</h3>
-<div class="preco">R$ 8,00</div>
-<button onclick="comprar('Disney+','8,00')">Comprar</button>
-</div>
+<div id="sociais" style="display:none">
+  <div class="produto" data-nome="whatsapp">
+    <h3>📱 WhatsApp</h3>
+    <div class="preco">R$ 15,00</div>
+    <button onclick="comprar('WhatsApp',15)">Comprar</button>
+  </div>
 
-<div class="produto" data-nome="hbo">
-<h3>🍿 HBO Max</h3>
-<div class="preco">R$ 10,00</div>
-<button onclick="comprar('HBO Max','10,00')">Comprar</button>
-</div>
-
-</div>
-
-<div id="servicos" style="display:none">
-
-<div class="produto" data-nome="whatsapp">
-<h3>📱 WhatsApp</h3>
-<div class="preco">R$ 15,00</div>
-<button onclick="comprar('WhatsApp','15,00')">Comprar</button>
-</div>
-
-<div class="produto" data-nome="telegram">
-<h3>✈️ Telegram</h3>
-<div class="preco">R$ 15,00</div>
-<button onclick="comprar('Telegram','15,00')">Comprar</button>
-</div>
-
-<div class="produto" data-nome="discord">
-<h3>🎮 Discord</h3>
-<div class="preco">R$ 15,00</div>
-<button onclick="comprar('Discord','15,00')">Comprar</button>
-</div>
-
+  <div class="produto" data-nome="telegram">
+    <h3>✈️ Telegram</h3>
+    <div class="preco">R$ 15,00</div>
+    <button onclick="comprar('Telegram',15)">Comprar</button>
+  </div>
 </div>
 
 <div id="pagamento" class="pagamento">
+  <h2>💳 Confirmar Pagamento</h2>
+  <p id="produtoEscolhido"></p>
 
-<h2>💳 Confirmação de Pagamento</h2>
+  <input value="71994141667" readonly>
+  <input id="nomeCliente" placeholder="Seu nome">
+  <input id="nomePix" placeholder="Nome usado no Pix">
 
-<p id="produtoEscolhido"></p>
+  <select id="formaEntrega">
+    <option>Chat da Plataforma</option>
+    <option>WhatsApp</option>
+    <option>Telegram</option>
+  </select>
 
-<input value="71994141667" readonly>
+  <input id="contatoEntrega" placeholder="Contato para entrega">
+  <button onclick="enviarPedido()">Enviar Pedido</button>
 
-<input id="nomePix" placeholder="Nome usado no pagamento">
-
-<select id="formaEntrega">
-<option>Chat da Plataforma</option>
-<option>WhatsApp</option>
-<option>Telegram</option>
-</select>
-
-<button onclick="confirmarPagamento()">
-Confirmar Pagamento
-</button>
-
-<div id="statusArea"></div>
-
+  <div id="statusArea"></div>
 </div>
 
-<div id="clienteArea" class="clienteArea">
-<h2>📦 Meu Pedido</h2>
-<div id="pedidoStatus"></div>
+</div><div class="box adminArea" id="adminArea">
+  <h2>👑 Painel Admin</h2>
 
-<div class="chatBox" id="chatBox">
-<div class="msg"><b>Sistema:</b> Aguarde atendimento.</div>
+  <input id="senhaAdmin" type="password" placeholder="Senha admin">
+  <button onclick="loginAdmin()">Entrar</button>
+
+  <div id="painelAdmin" style="display:none">
+    <h2>📊 Dashboard</h2>
+
+    <div class="dash">
+      <div>Total: <span id="totalPedidos">0</span></div>
+      <div>Processando: <span id="processando">0</span></div>
+      <div>Confirmados: <span id="confirmados">0</span></div>
+      <div>Entregues: <span id="entregues">0</span></div>
+      <div>Faturamento: R$ <span id="faturamento">0</span></div>
+    </div>
+
+    <h2>📋 Pedidos</h2>
+    <div id="listaPedidos"></div>
+  </div>
 </div>
 
-<textarea id="mensagemCliente" placeholder="Mensagem"></textarea>
-<button onclick="enviarMensagem()">Enviar</button>
+<footer>© ST Streaming</footer>
 
-<h3 style="margin-top:20px">⭐ Avaliação</h3>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
-<select id="nota">
-<option>5</option>
-<option>4</option>
-<option>3</option>
-<option>2</option>
-<option>1</option>
-</select>
+const firebaseConfig = {
+  apiKey: "AIzaSyBDmMHv_QDAgpJROzMiDlqSyahhRcWL1v0",
+  authDomain: "st-streaming-9acd9.firebaseapp.com",
+  projectId: "st-streaming-9acd9",
+  storageBucket: "st-streaming-9acd9.firebasestorage.app",
+  messagingSenderId: "695341762827",
+  appId: "1:695341762827:web:d68e0e626e83f8b2e83a0e"
+};
 
-<textarea id="comentario" placeholder="Comentário"></textarea>
-
-<button onclick="enviarAvaliacao()">
-Enviar Avaliação
-</button>
-
-</div>
-
-</div><div id="adminArea" class="adminArea">
-
-<h2>👑 Painel Admin</h2>
-
-<input id="senhaAdmin" type="password" placeholder="Senha Admin">
-<button onclick="loginAdmin()">Entrar</button>
-
-<div id="painel" style="display:none">
-
-<h3>📋 Pedidos</h3>
-<div id="listaPedidos"></div>
-
-<h3 style="margin-top:25px">⭐ Avaliações</h3>
-<div id="listaAvaliacoes"></div>
-
-</div>
-
-</div>
-
-<footer>
-© ST Streaming
-</footer>
-
-<script>
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 let produtoAtual = "";
-let pedidos = JSON.parse(localStorage.getItem("pedidos") || "[]");
-let avaliacoes = JSON.parse(localStorage.getItem("avaliacoes") || "[]");
+let precoAtual = 0;
+
+window.mostrar = function(tipo){
+  document.getElementById("streaming").style.display = tipo === "streaming" ? "block" : "none";
+  document.getElementById("sociais").style.display = tipo === "sociais" ? "block" : "none";
+};
+
+window.comprar = function(produto, preco){
+  produtoAtual = produto;
+  precoAtual = preco;
+  document.getElementById("pagamento").style.display = "block";
+  document.getElementById("produtoEscolhido").innerText = `Produto: ${produto} | Valor: R$ ${preco}`;
+};
+
+window.enviarPedido = async function(){
+  const clienteNome = document.getElementById("nomeCliente").value;
+  const nomePix = document.getElementById("nomePix").value;
+  const formaEntrega = document.getElementById("formaEntrega").value;
+  const contatoEntrega = document.getElementById("contatoEntrega").value;
+
+  if(!clienteNome || !nomePix){
+    alert("Preencha seu nome e o nome usado no Pix.");
+    return;
+  }
+
+  await addDoc(collection(db, "pedidos"), {
+    clienteNome,
+    produto: produtoAtual,
+    preco: precoAtual,
+    nomePix,
+    formaEntrega,
+    contatoEntrega,
+    status: "Processando pagamento",
+    criadoEm: serverTimestamp()
+  });
+
+  document.getElementById("statusArea").innerHTML =
+    '<div class="status">⏳ Processando pagamento... Aguarde enquanto verificamos seu pagamento.</div>';
+};
 
 if(location.search.includes("admin")){
-document.getElementById("site").style.display="none";
-document.getElementById("adminArea").style.display="block";
+  document.getElementById("site").style.display = "none";
+  document.getElementById("adminArea").style.display = "block";
 }
 
-function mostrar(tipo){
-document.getElementById("streaming").style.display = tipo==="streaming" ? "block":"none";
-document.getElementById("servicos").style.display = tipo==="servicos" ? "block":"none";
-}
+window.loginAdmin = function(){
+  if(document.getElementById("senhaAdmin").value !== "1234"){
+    alert("Senha incorreta");
+    return;
+  }
 
-function comprar(produto,preco){
-produtoAtual = produto;
-document.getElementById("pagamento").style.display="block";
-document.getElementById("produtoEscolhido").innerText =
-"Produto: " + produto + " | Valor: R$ " + preco;
-}
+  document.getElementById("painelAdmin").style.display = "block";
 
-function confirmarPagamento(){
+  onSnapshot(collection(db, "pedidos"), (snap) => {
+    let total = 0, processando = 0, confirmados = 0, entregues = 0, faturamento = 0;
+    let html = "";
 
-let nome = document.getElementById("nomePix").value;
-let entrega = document.getElementById("formaEntrega").value;
+    snap.forEach((d) => {
+      const p = d.data();
+      total++;
 
-if(!nome){
-alert("Informe o nome usado no pagamento");
-return;
-}
+      if(p.status === "Processando pagamento") processando++;
+      if(p.status === "Pagamento confirmado") confirmados++;
+      if(p.status === "Entregue") entregues++;
+      if(p.status === "Entregue") faturamento += Number(p.preco || 0);
 
-let pedido = {
-nome,
-produto:produtoAtual,
-entrega,
-status:"Processando pagamento"
+      html += `
+        <div class="pedido">
+          <b>${p.clienteNome}</b><br>
+          Produto: ${p.produto}<br>
+          Valor: R$ ${p.preco}<br>
+          Nome Pix: ${p.nomePix}<br>
+          Entrega: ${p.formaEntrega}<br>
+          Contato: ${p.contatoEntrega || "Chat da plataforma"}<br>
+          Status: <b>${p.status}</b><br>
+
+          <button onclick="atualizarStatus('${d.id}','Pagamento confirmado')">Confirmar pagamento</button>
+          <button onclick="atualizarStatus('${d.id}','Recusado')">Recusar</button>
+          <button onclick="atualizarStatus('${d.id}','Entregue')">Marcar entregue</button>
+        </div>
+      `;
+    });
+
+    document.getElementById("totalPedidos").innerText = total;
+    document.getElementById("processando").innerText = processando;
+    document.getElementById("confirmados").innerText = confirmados;
+    document.getElementById("entregues").innerText = entregues;
+    document.getElementById("faturamento").innerText = faturamento;
+    document.getElementById("listaPedidos").innerHTML = html || "Nenhum pedido.";
+  });
 };
 
-pedidos.push(pedido);
-localStorage.setItem("pedidos",JSON.stringify(pedidos));
-
-document.getElementById("clienteArea").style.display="block";
-
-document.getElementById("pedidoStatus").innerHTML=
-'<div class="status">⏳ Processando pagamento...</div>';
-
-setTimeout(()=>{
-document.getElementById("pedidoStatus").innerHTML=
-'<div class="status">✅ Pagamento confirmado.<br>Um atendente irá iniciar seu atendimento em breve.</div>';
-},4000);
-
-}
-
-function enviarMensagem(){
-
-let texto = document.getElementById("mensagemCliente").value;
-
-if(!texto) return;
-
-document.getElementById("chatBox").innerHTML +=
-'<div class="msg"><b>Cliente:</b> '+texto+'</div>';
-
-document.getElementById("mensagemCliente").value="";
-}
-
-function enviarAvaliacao(){
-
-let avaliacao = {
-nota:document.getElementById("nota").value,
-comentario:document.getElementById("comentario").value,
-produto:produtoAtual
+window.atualizarStatus = async function(id, status){
+  await updateDoc(doc(db, "pedidos", id), { status });
 };
 
-avaliacoes.push(avaliacao);
-
-localStorage.setItem(
-"avaliacoes",
-JSON.stringify(avaliacoes)
-);
-
-alert("Avaliação enviada!");
-}
-
-function loginAdmin(){
-
-if(document.getElementById("senhaAdmin").value !== "1234"){
-alert("Senha incorreta");
-return;
-}
-
-document.getElementById("painel").style.display="block";
-
-renderPedidos();
-renderAvaliacoes();
-}
-
-function renderPedidos(){
-
-let html="";
-
-pedidos.forEach((p,i)=>{
-
-html += `
-<div class="pedido">
-<b>${p.nome}</b><br>
-Produto: ${p.produto}<br>
-Entrega: ${p.entrega}<br>
-Status: ${p.status}<br>
-
-<button onclick="confirmarAdmin(${i})">
-Confirmar
-</button>
-
-<button onclick="entregarAdmin(${i})">
-Entregue
-</button>
-</div>
-`;
-
-});
-
-document.getElementById("listaPedidos").innerHTML =
-html || "Nenhum pedido.";
-}
-
-function confirmarAdmin(i){
-
-pedidos[i].status="Pagamento Confirmado";
-
-localStorage.setItem(
-"pedidos",
-JSON.stringify(pedidos)
-);
-
-renderPedidos();
-}
-
-function entregarAdmin(i){
-
-pedidos[i].status="Pedido Entregue";
-
-localStorage.setItem(
-"pedidos",
-JSON.stringify(pedidos)
-);
-
-renderPedidos();
-}
-
-function renderAvaliacoes(){
-
-let html="";
-
-avaliacoes.forEach(a=>{
-
-html += `
-<div class="avaliacao">
-⭐ ${a.nota}/5<br>
-Produto: ${a.produto}<br>
-${a.comentario}
-</div>
-`;
-
-});
-
-document.getElementById("listaAvaliacoes").innerHTML =
-html || "Nenhuma avaliação.";
-}
-
-function buscar(txt){
-
-txt = txt.toLowerCase();
-
-document.querySelectorAll(".produto").forEach(p=>{
-
-p.style.display =
-p.dataset.nome.includes(txt)
-? "block"
-: "none";
-
-});
-
-}
-
+window.buscar = function(txt){
+  txt = txt.toLowerCase();
+  document.querySelectorAll(".produto").forEach(p => {
+    p.style.display = p.dataset.nome.includes(txt) ? "block" : "none";
+  });
+};
 </script>
 
 </body>
