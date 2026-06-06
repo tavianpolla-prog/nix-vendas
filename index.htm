@@ -1,0 +1,27 @@
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBDmMHv_QDAgpJROzMiDlqSyahhRcWL1v0",
+  authDomain: "st-streaming-9acd9.firebaseapp.com",
+  projectId: "st-streaming-9acd9",
+  storageBucket: "st-streaming-9acd9.firebasestorage.app",
+  messagingSenderId: "695341762827",
+  appId: "1:695341762827:web:d68e0e626e83f8b2e83a0e",
+  measurementId: "G-X57X853NQ0"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function carregarProdutos() {
+  const produtos = await getDocs(collection(db, "Produtos"));
+
+  produtos.forEach((doc) => {
+    console.log(doc.id, doc.data());
+  });
+}
+
+carregarProdutos();
+</script>
