@@ -4,58 +4,37 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Chat - ST Admin</title>
-
 <style>
-body{background:#0b0b0b;color:white;font-family:Arial;padding:20px}
-h1,h2{color:#d4af37}
+body{background:#0b0b0b;color:white;font-family:Arial,sans-serif;padding:20px}
+h1,h2,h3{color:#d4af37}
 a{color:#d4af37;text-decoration:none}
-.container{display:grid;grid-template-columns:1fr 2fr;gap:15px;margin-top:20px}
-.card,.chatbox{background:#151515;border:1px solid #d4af37;border-radius:10px;padding:15px}
-.cliente{padding:12px;border-bottom:1px solid #333;cursor:pointer}
-.cliente:hover{background:#222}
-.mensagens{height:300px;overflow:auto;background:#0f0f0f;padding:12px;border-radius:8px;margin:15px 0}
+.card{background:#151515;border:1px solid #d4af37;padding:15px;border-radius:10px;margin-bottom:15px}
+.chatbox{height:330px;overflow:auto;background:#111;border:1px solid #d4af37;padding:12px;border-radius:10px;margin:15px 0}
 .msg{background:#222;padding:10px;border-radius:8px;margin-bottom:8px}
 .admin{background:#3b2f0b}
-input,textarea{width:100%;padding:12px;background:#222;border:1px solid #d4af37;color:white;border-radius:8px;margin-top:8px}
+.cliente{background:#10233b}
+.sistema{background:#333}
+textarea,input{width:100%;padding:12px;background:#222;border:1px solid #d4af37;color:white;border-radius:8px;margin-top:8px}
 button{background:#d4af37;color:black;border:0;padding:10px 14px;border-radius:6px;font-weight:bold;margin:5px 3px 0 0}
 .fechar{background:#dc3545;color:white}
 .rapida{background:#222;color:#d4af37;border:1px solid #d4af37}
-@media(max-width:700px){.container{grid-template-columns:1fr}}
 </style>
 </head>
-
 <body>
 
-<a href="dashboard.html">⬅ Voltar ao Dashboard</a>
+<a href="pedidos.html">⬅ Voltar aos Pedidos</a>
 
-<h1>💬 Chat de Atendimento</h1>
-
-<div class="container">
+<h1>💬 Chat de Entrega</h1>
 
 <div class="card">
-<h2>Atendimentos</h2>
-
-<div class="cliente" onclick="abrirChat('João Silva','Netflix')">
-<b>João Silva</b><br>
-Netflix<br>
-Status: Pagamento confirmado
+<h2 id="infoPedido">Carregando pedido...</h2>
 </div>
 
-<div class="cliente" onclick="abrirChat('Maria Souza','Discord')">
-<b>Maria Souza</b><br>
-Discord<br>
-Status: Processando
+<div class="chatbox" id="mensagens">
+<div class="msg sistema"><b>Sistema:</b> Carregando mensagens...</div>
 </div>
 
-</div>
-
-<div class="chatbox">
-<h2 id="tituloChat">Selecione um atendimento</h2>
-
-<div class="mensagens" id="mensagens">
-<div class="msg">Selecione um cliente para iniciar o atendimento.</div>
-</div>
-
+<div class="card">
 <h3>🤖 Respostas rápidas</h3>
 
 <button class="rapida" onclick="respostaRapida('✅ Pagamento confirmado. Um atendente irá iniciar seu atendimento em breve.')">Pagamento confirmado</button>
@@ -66,44 +45,126 @@ Status: Processando
 
 <button class="rapida" onclick="respostaRapida('✅ Pedido concluído. Obrigado pela compra!')">Pedido concluído</button>
 
-<textarea id="textoMsg" placeholder="Digite sua resposta..."></textarea>
+<textarea id="textoMsg" placeholder="Digite sua resposta para o cliente..."></textarea>
 
 <button onclick="enviarMensagem()">Enviar</button>
-<button class="fechar" onclick="fecharChat()">Fechar atendimento</button>
-
+<button onclick="enviarAcesso()">🔑 Enviar acesso</button>
+<button class="fechar" onclick="fecharAtendimento()">Fechar atendimento</button>
 </div>
 
-</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { getFirestore, doc, getDoc, updateDoc, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
-<script>
-let clienteAtual="";
+const firebaseConfig={
+apiKey:"AIzaSyBDmMHv_QDAgpJROzMiDlqSyahhRcWL1v0",
+authDomain:"st-streaming-9acd9.firebaseapp.com",
+projectId:"st-streaming-9acd9",
+storageBucket:"st-streaming-9acd9.firebasestorage.app",
+messagingSenderId:"695341762827",
+appId:"1:695341762827:web:d68e0e626e83f8b2e83a0e"
+};
 
-function abrirChat(nome,produto){
-clienteAtual=nome;
-document.getElementById("tituloChat").innerText="Atendimento: "+nome+" | "+produto;
-document.getElementById("mensagens").innerHTML=
-'<div class="msg"><b>Sistema:</b> Chat iniciado para '+nome+'.</div>'+
-'<div class="msg"><b>Cliente:</b> Olá, já fiz o Pix.</div>';
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+
+const pedidoId=localStorage.getItem("pedidoChat");
+
+if(!pedidoId){
+document.getElementById("infoPedido").innerText="Nenhum pedido selecionado.";
+document.getElementById("mensagens").innerHTML='<div class="msg sistema">Volte em Pedidos e clique em Chat.</div>';
+}else{
+carregarPedido();
+carregarMensagens();
 }
 
-function enviarMensagem(){
-let texto=document.getElementById("textoMsg").value;
-if(!texto)return;
-document.getElementById("mensagens").innerHTML+=
-'<div class="msg admin"><b>Admin:</b> '+texto+'</div>';
-document.getElementById("textoMsg").value="";
+async function carregarPedido(){
+const ref=doc(db,"pedidos",pedidoId);
+const snap=await getDoc(ref);
+
+if(!snap.exists()){
+document.getElementById("infoPedido").innerText="Pedido não encontrado.";
+return;
 }
 
-function respostaRapida(texto){
+const p=snap.data();
+
+document.getElementById("infoPedido").innerHTML=
+`Cliente: ${p.clienteNome || "Não informado"}<br>
+Produto: ${p.produto || "Não informado"}<br>
+Entrega: ${p.formaEntrega || "Não informado"}<br>
+Contato: ${p.contatoEntrega || "Chat da plataforma"}<br>
+Status: ${p.status || "Processando pagamento"}`;
+}
+
+function carregarMensagens(){
+const q=query(collection(db,"pedidos",pedidoId,"mensagens"),orderBy("criadoEm"));
+
+onSnapshot(q,snap=>{
+let html="";
+
+snap.forEach(d=>{
+const m=d.data();
+let classe=m.autor==="admin"?"admin":m.autor==="cliente"?"cliente":"sistema";
+
+html+=`<div class="msg ${classe}"><b>${m.autor}:</b> ${m.texto}</div>`;
+});
+
+document.getElementById("mensagens").innerHTML=html || '<div class="msg sistema"><b>Sistema:</b> Nenhuma mensagem ainda.</div>';
+document.getElementById("mensagens").scrollTop=document.getElementById("mensagens").scrollHeight;
+});
+}
+
+window.respostaRapida=function(texto){
 document.getElementById("textoMsg").value=texto;
-}
+};
 
-function fecharChat(){
-if(!clienteAtual){alert("Selecione um atendimento.");return}
-document.getElementById("mensagens").innerHTML+=
-'<div class="msg admin"><b>Sistema:</b> Atendimento fechado.</div>';
+window.enviarMensagem=async function(){
+const texto=document.getElementById("textoMsg").value;
+
+if(!texto || !pedidoId)return;
+
+await addDoc(collection(db,"pedidos",pedidoId,"mensagens"),{
+autor:"admin",
+texto,
+criadoEm:serverTimestamp()
+});
+
+document.getElementById("textoMsg").value="";
+};
+
+window.enviarAcesso=async function(){
+const acesso=prompt("Digite os dados de acesso para enviar ao cliente:");
+
+if(!acesso)return;
+
+await addDoc(collection(db,"pedidos",pedidoId,"mensagens"),{
+autor:"admin",
+texto:"🔑 Dados de acesso: "+acesso,
+criadoEm:serverTimestamp()
+});
+
+await updateDoc(doc(db,"pedidos",pedidoId),{
+status:"Acesso enviado"
+});
+};
+
+window.fecharAtendimento=async function(){
+if(!confirm("Fechar atendimento e marcar como entregue?"))return;
+
+await addDoc(collection(db,"pedidos",pedidoId,"mensagens"),{
+autor:"sistema",
+texto:"✅ Atendimento finalizado. Pedido concluído.",
+criadoEm:serverTimestamp()
+});
+
+await updateDoc(doc(db,"pedidos",pedidoId),{
+status:"Entregue",
+chatAberto:false
+});
+
 alert("Atendimento fechado!");
-}
+};
 </script>
 
 </body>
