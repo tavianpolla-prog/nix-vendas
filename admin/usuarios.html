@@ -6,103 +6,37 @@
 <title>Usuários - ST Admin</title>
 
 <style>
-body{
-background:#0b0b0b;
-color:white;
-font-family:Arial,sans-serif;
-padding:20px;
-}
-
-h1,h2{
-color:#d4af37;
-}
-
-a{
-color:#d4af37;
-text-decoration:none;
-}
-
-.stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
-margin:20px 0;
-}
-
-.card{
-background:#151515;
-border:1px solid #d4af37;
-padding:15px;
-border-radius:10px;
-}
-
-.numero{
-font-size:28px;
-font-weight:bold;
-color:#d4af37;
-}
-
-.usuario{
-background:#151515;
-border:1px solid #d4af37;
-padding:15px;
-border-radius:10px;
-margin-bottom:12px;
-}
-
-.status{
-color:#00ff88;
-font-weight:bold;
-}
-
-.offline{
-color:#ff5555;
-font-weight:bold;
-}
+body{background:#0b0b0b;color:white;font-family:Arial,sans-serif;padding:20px}
+h1,h2{color:#d4af37}
+a{color:#d4af37;text-decoration:none}
+.card,.usuario{background:#151515;border:1px solid #d4af37;padding:15px;border-radius:10px;margin-bottom:15px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:20px 0}
+.numero{font-size:28px;font-weight:900;color:#d4af37}
+input{width:100%;padding:12px;background:#222;border:1px solid #d4af37;color:white;border-radius:8px;margin-bottom:15px}
+.online{color:#00ff88;font-weight:bold}
+.offline{color:#ff5555;font-weight:bold}
 </style>
 </head>
+
 <body>
 
 <a href="dashboard.html">⬅ Voltar ao Dashboard</a>
 
 <h1>👥 Usuários</h1>
 
+<input placeholder="🔍 Buscar usuário">
+
 <div class="stats">
-
-<div class="card">
-<div class="numero">15</div>
-Online Agora
+<div class="card"><div class="numero">0</div>Online agora</div>
+<div class="card"><div class="numero">0</div>Total de clientes</div>
+<div class="card"><div class="numero">0</div>Novos hoje</div>
 </div>
 
-<div class="card">
-<div class="numero">324</div>
-Total Clientes
-</div>
-
-<div class="card">
-<div class="numero">27</div>
-Novos Hoje
-</div>
-
-</div>
-
-<h2>Usuários Recentes</h2>
+<h2>Usuários recentes</h2>
 
 <div class="usuario">
-<b>João Silva</b><br>
-Último acesso: há 2 minutos<br>
-<span class="status">● Online</span>
-</div>
-
-<div class="usuario">
-<b>Maria Souza</b><br>
-Último acesso: há 15 minutos<br>
-<span class="status">● Online</span>
-</div>
-
-<div class="usuario">
-<b>Carlos Lima</b><br>
-Último acesso: ontem<br>
+<b>Cliente exemplo</b><br>
+Último acesso: aguardando dados reais<br>
 <span class="offline">● Offline</span>
 </div>
 
