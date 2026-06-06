@@ -1,1 +1,211 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ST Streaming</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#070714;color:white}
+header{padding:18px;background:#11112b;text-align:center}
+.logo{font-size:32px;font-weight:900;color:#b84cff}
+.hero{padding:60px 20px;text-align:center;background:linear-gradient(#0008,#000),url('imagens/banner.png');background-size:cover;background-position:center}
+.hero h1{font-size:42px}.hero p{color:#ddd;margin:15px}
+.btn{background:#b84cff;color:white;border:0;padding:13px 22px;border-radius:30px;font-weight:900;text-decoration:none;margin:5px;display:inline-block}
+section{padding:35px 20px;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:15px}
+.card,.box{background:#151538;border:1px solid #7b32ff;border-radius:18px;padding:20px}
+.preco{font-size:28px;color:#b84cff;font-weight:900;margin:10px}
+input,select,textarea{width:100%;padding:13px;border-radius:10px;border:0;margin:8px 0}
+.chat{height:260px;overflow:auto;background:#09091a;padding:12px;border-radius:12px;text-align:left}
+.msg{padding:9px;margin:6px;border-radius:10px;background:#24245a}
+.admin{display:none}
+footer{text-align:center;padding:25px;background:#11112b;color:#aaa}
+</style>
+</head><body>
 
+<header><div class="logo">ST Streaming</div></header>
+
+<div id="site">
+<div class="hero">
+<h1>Seu universo de streaming</h1>
+<p>Escolha seu plano, faça o Pix e acompanhe seu pedido pelo chat privado.</p>
+<a href="#produtos" class="btn">Ver produtos</a>
+</div>
+
+<section id="produtos">
+<h2>Catálogo</h2>
+<div class="grid" id="produtosLista"></div>
+</section>
+
+<section>
+<h2>Fazer pedido</h2>
+<div class="box">
+<input id="clienteNome" placeholder="Seu nome">
+<select id="produtoPedido"></select>
+<input id="pix" value="71994141667" readonly>
+<button class="btn" onclick="copiarPix()">Copiar Pix</button>
+<button class="btn" onclick="criarPedido()">Enviar pedido</button>
+</div>
+</section>
+
+<section id="areaCliente" style="display:none">
+<h2>Meu pedido</h2>
+<div class="box">
+<p id="statusCliente"></p>
+<div class="chat" id="chatCliente"></div>
+<input id="msgCliente" placeholder="Digite sua mensagem">
+<button class="btn" onclick="enviarMsgCliente()">Enviar</button>
+</div>
+</section>
+</div>
+
+<section id="admin" class="admin">
+<h2>Painel Admin</h2>
+<input id="senha" type="password" placeholder="Senha admin">
+<button class="btn" onclick="loginAdmin()">Entrar</button>
+<div id="painelAdmin" style="display:none">
+<h2>Pedidos</h2>
+<div id="listaPedidos"></div>
+<div id="adminChatBox" style="display:none" class="box">
+<h3>Chat do pedido</h3>
+<p id="adminPedidoInfo"></p>
+<div class="chat" id="chatAdmin"></div>
+<input id="msgAdmin" placeholder="Responder cliente">
+<button class="btn" onclick="enviarMsgAdmin()">Enviar</button>
+<button class="btn" onclick="confirmarPagamento()">Confirmar pagamento</button>
+<button class="btn" onclick="fecharChat()">Fechar chat</button>
+</div>
+</div>
+</section>
+
+<footer>© 2026 ST Streaming</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { getFirestore,collection,addDoc,onSnapshot,doc,updateDoc,serverTimestamp,query,orderBy } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyBDmMHv_QDAgpJROzMiDlqSyahhRcWL1v0",
+authDomain:"st-streaming-9acd9.firebaseapp.com",
+projectId:"st-streaming-9acd9",
+storageBucket:"st-streaming-9acd9.firebasestorage.app",
+messagingSenderId:"695341762827",
+appId:"1:695341762827:web:d68e0e626e83f8b2e83a0e"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+
+const produtos=[
+["Netflix","9,00"],["Disney+","8,00"],["Globoplay","10,00"],
+["Paramount+","7,00"],["Prime Video","8,00"],["Crunchyroll","7,00"],["HBO Max","10,00"]
+];
+
+let pedidoAtual=localStorage.getItem("pedidoAtual");
+let adminPedidoAtual=null;
+
+function carregarProdutos(){
+let html="",opts="";
+produtos.forEach(p=>{
+html+=`<div class="card"><h3>${p[0]}</h3><div class="preco">R$ ${p[1]}</div><a href="#produtoPedido" class="btn">Comprar</a></div>`;
+opts+=`<option value="${p[0]}">${p[0]} - R$ ${p[1]}</option>`;
+});
+document.getElementById("produtosLista").innerHTML=html;
+document.getElementById("produtoPedido").innerHTML=opts;
+}
+carregarProdutos();
+
+window.copiarPix=function(){
+navigator.clipboard.writeText(document.getElementById("pix").value);
+alert("Pix copiado!");
+}
+
+window.criarPedido=async function(){
+const nome=document.getElementById("clienteNome").value;
+const produto=document.getElementById("produtoPedido").value;
+if(!nome){alert("Digite seu nome");return}
+const ref=await addDoc(collection(db,"pedidos"),{
+nome,produto,status:"aguardando pagamento",chatAberto:true,criadoEm:serverTimestamp()
+});
+pedidoAtual=ref.id;
+localStorage.setItem("pedidoAtual",pedidoAtual);
+await addDoc(collection(db,"pedidos",pedidoAtual,"mensagens"),{
+autor:"sistema",texto:"Pedido criado. Aguarde confirmação do pagamento.",criadoEm:serverTimestamp()
+});
+abrirCliente();
+alert("Pedido enviado!");
+}
+
+function abrirCliente(){
+if(!pedidoAtual)return;
+document.getElementById("areaCliente").style.display="block";
+onSnapshot(doc(db,"pedidos",pedidoAtual),(snap)=>{
+if(!snap.exists())return;
+const p=snap.data();
+document.getElementById("statusCliente").innerText=`Produto: ${p.produto} | Status: ${p.status}`;
+if(p.chatAberto===false)document.getElementById("msgCliente").disabled=true;
+});
+const q=query(collection(db,"pedidos",pedidoAtual,"mensagens"),orderBy("criadoEm"));
+onSnapshot(q,(snap)=>{
+let html="";
+snap.forEach(d=>{const m=d.data();html+=`<div class="msg"><b>${m.autor}:</b> ${m.texto}</div>`});
+document.getElementById("chatCliente").innerHTML=html;
+});
+}
+abrirCliente();
+
+window.enviarMsgCliente=async function(){
+const texto=document.getElementById("msgCliente").value;
+if(!texto||!pedidoAtual)return;
+await addDoc(collection(db,"pedidos",pedidoAtual,"mensagens"),{autor:"cliente",texto,criadoEm:serverTimestamp()});
+document.getElementById("msgCliente").value="";
+}
+
+if(location.search.includes("admin")){
+document.getElementById("site").style.display="none";
+document.getElementById("admin").style.display="block";
+}
+
+window.loginAdmin=function(){
+if(document.getElementById("senha").value!=="1234"){alert("Senha errada");return}
+document.getElementById("painelAdmin").style.display="block";
+onSnapshot(collection(db,"pedidos"),(snap)=>{
+let html="";
+snap.forEach(d=>{
+const p=d.data();
+html+=`<div class="card"><h3>${p.nome}</h3><p>${p.produto}</p><p>Status: ${p.status}</p><button class="btn" onclick="abrirAdminChat('${d.id}','${p.nome}','${p.produto}')">Abrir chat</button></div>`;
+});
+document.getElementById("listaPedidos").innerHTML=html;
+});
+}
+
+window.abrirAdminChat=function(id,nome,produto){
+adminPedidoAtual=id;
+document.getElementById("adminChatBox").style.display="block";
+document.getElementById("adminPedidoInfo").innerText=`Cliente: ${nome} | Produto: ${produto}`;
+const q=query(collection(db,"pedidos",id,"mensagens"),orderBy("criadoEm"));
+onSnapshot(q,(snap)=>{
+let html="";
+snap.forEach(d=>{const m=d.data();html+=`<div class="msg"><b>${m.autor}:</b> ${m.texto}</div>`});
+document.getElementById("chatAdmin").innerHTML=html;
+});
+}
+
+window.enviarMsgAdmin=async function(){
+const texto=document.getElementById("msgAdmin").value;
+if(!texto||!adminPedidoAtual)return;
+await addDoc(collection(db,"pedidos",adminPedidoAtual,"mensagens"),{autor:"admin",texto,criadoEm:serverTimestamp()});
+document.getElementById("msgAdmin").value="";
+}
+
+window.confirmarPagamento=async function(){
+if(!adminPedidoAtual)return;
+await updateDoc(doc(db,"pedidos",adminPedidoAtual),{status:"pagamento confirmado"});
+await addDoc(collection(db,"pedidos",adminPedidoAtual,"mensagens"),{autor:"sistema",texto:"Pagamento confirmado. Aguarde a entrega.",criadoEm:serverTimestamp()});
+}
+
+window.fecharChat=async function(){
+if(!adminPedidoAtual)return;
+await updateDoc(doc(db,"pedidos",adminPedidoAtual),{status:"entregue",chatAberto:false});
+await addDoc(collection(db,"pedidos",adminPedidoAtual,"mensagens"),{autor:"sistema",texto:"Pedido entregue. Chat fechado.",criadoEm:serverTimestamp()});
+}
+</script>
+</body></html>
