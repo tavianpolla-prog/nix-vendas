@@ -1,87 +1,95 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html><html lang="pt-BR"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>ST Streaming</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#070914;color:white}
-header{padding:22px;text-align:center;background:#10102a}
-.logo{font-size:34px;font-weight:900}
-.hero{
-min-height:520px;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:30px;
-background:
-linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.75)),
-url('imagens/banner.png');
-background-size:cover;
-background-position:center;
-}
-.hero h1{font-size:46px;margin-bottom:15px;text-shadow:0 4px 20px #000}
+body{background:#070714;color:white}
+header{padding:18px 7%;display:flex;justify-content:space-between;align-items:center;background:#0d0d24;position:sticky;top:0;z-index:10}
+.logo{font-size:30px;font-weight:900;color:#b84cff}
+nav a{color:white;text-decoration:none;margin-left:15px;font-weight:bold}
+.hero{min-height:540px;background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.8)),url('imagens/banner.png');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;text-align:center;padding:30px}
+.hero-box{background:rgba(0,0,0,.45);padding:35px;border-radius:25px;backdrop-filter:blur(6px);max-width:760px}
+.hero h1{font-size:52px;margin-bottom:12px}
 .hero p{font-size:20px;color:#eee;margin-bottom:25px}
-.btn{display:inline-block;background:#00d9ff;color:#000;padding:15px 28px;border-radius:35px;text-decoration:none;font-weight:900}
-section{padding:45px 20px;text-align:center}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px;margin-top:30px}
-.card{background:#121735;border:1px solid #2b3478;border-radius:18px;padding:22px}
-.card h3{font-size:22px;margin-bottom:10px}
-.preco{color:#00d9ff;font-size:28px;font-weight:900;margin:10px 0}
-.pix{background:#10152f;border-radius:20px;padding:25px;margin-top:25px}
+.btn{display:inline-block;background:#b84cff;color:white;padding:14px 25px;border-radius:30px;text-decoration:none;font-weight:900;border:none}
+section{padding:55px 7%;text-align:center}
+h2{font-size:34px;margin-bottom:25px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:20px}
+.card,.item{background:#12122e;border:1px solid #6b2dff;border-radius:22px;padding:24px;box-shadow:0 0 20px #6b2dff33}
+.card h3,.item h3{font-size:23px;margin-bottom:10px;color:#fff}
+.item{text-align:left}
+.item h3{color:#b84cff}
+.preco{font-size:30px;font-weight:900;color:#b84cff;margin:12px 0}
+.pix{max-width:650px;margin:auto;background:#12122e;border:1px solid #6b2dff;border-radius:22px;padding:25px}
 input{width:100%;padding:14px;border-radius:10px;border:none;margin:10px 0}
-footer{padding:25px;text-align:center;background:#10102a;color:#aaa}
-</style>
-</head>
-<body>
+.admin{display:none;background:#0b0b1d;padding:30px}
+.admin-box{max-width:750px;margin:auto;background:#151538;padding:25px;border-radius:20px}
+.floating{position:fixed;right:18px;bottom:18px;background:#b84cff;color:white;padding:14px 20px;border-radius:40px;text-decoration:none;font-weight:900;z-index:99}
+footer{background:#0d0d24;text-align:center;padding:25px;color:#aaa}
+@media(max-width:600px){.hero h1{font-size:38px}nav{display:none}}
+</style></head><body>
 
-<header>
-<div class="logo">ST Streaming</div>
-</header>
+<header><div class="logo">ST Streaming</div><nav><a href="#produtos">Produtos</a><a href="#combos">Combos</a><a href="#pix">Pix</a></nav></header>
 
-<div class="hero">
-<h1>Streaming com praticidade</h1>
-<p>Escolha seu plano, faça o Pix e receba seu acesso com rapidez.</p>
-<a href="#produtos" class="btn">Ver produtos</a>
+<div id="site">
+<section class="hero"><div class="hero-box">
+<h1>Seu universo de streaming</h1>
+<p>Planos digitais com praticidade, rapidez e suporte.</p>
+<a href="#produtos" class="btn">Ver catálogo</a>
+</div></section>
+
+<section id="produtos"><h2>Catálogo</h2><div class="grid" id="listaProdutos"></div></section>
+
+<section><h2>Por que comprar com a ST?</h2><div class="grid">
+<div class="item"><h3>Entrega rápida</h3><p>Receba as informações do seu plano após confirmação do Pix.</p></div>
+<div class="item"><h3>Suporte</h3><p>Atendimento para dúvidas e orientações.</p></div>
+<div class="item"><h3>Praticidade</h3><p>Escolha o plano, pague via Pix e aproveite.</p></div>
+</div></section>
+
+<section id="combos"><h2>Combos especiais</h2><div class="grid">
+<div class="card"><h3>Combo Filmes</h3><div class="preco">R$ 39,90</div><p>Netflix + Prime Video</p><a href="#pix" class="btn">Comprar</a></div>
+<div class="card"><h3>Combo Família</h3><div class="preco">R$ 49,90</div><p>Disney+ + HBO Max</p><a href="#pix" class="btn">Comprar</a></div>
+<div class="card"><h3>Combo Premium</h3><div class="preco">R$ 69,90</div><p>3 plataformas à escolha</p><a href="#pix" class="btn">Comprar</a></div>
+</div></section>
+
+<section><h2>Dúvidas frequentes</h2><div class="grid">
+<div class="item"><h3>Como recebo?</h3><p>Após o pagamento, você recebe as orientações do plano.</p></div>
+<div class="item"><h3>O pagamento é Pix?</h3><p>Sim. Copie a chave Pix na área de pagamento.</p></div>
+<div class="item"><h3>Tem suporte?</h3><p>Sim, damos suporte após a compra.</p></div>
+</div></section>
+
+<section id="pix"><h2>Pagamento via Pix</h2><div class="pix">
+<p>Copie a chave Pix abaixo para realizar o pagamento.</p>
+<input id="chavePix" readonly>
+<button class="btn" onclick="copiarPix()">Copiar Pix</button>
+</div></section>
 </div>
 
-<section id="produtos">
-<h2>Catálogo</h2>
-<div class="grid">
-<div class="card"><h3>Netflix</h3><div class="preco">R$25,00</div><a href="#pix" class="btn">Comprar</a></div>
-<div class="card"><h3>Disney+</h3><div class="preco">R$20,00</div><a href="#pix" class="btn">Comprar</a></div>
-<div class="card"><h3>Globoplay</h3><div class="preco">R$20,00</div><a href="#pix" class="btn">Comprar</a></div>
-<div class="card"><h3>Paramount+</h3><div class="preco">R$15,00</div><a href="#pix" class="btn">Comprar</a></div>
-<div class="card"><h3>Prime Video</h3><div class="preco">R$15,00</div><a href="#pix" class="btn">Comprar</a></div>
-<div class="card"><h3>Crunchyroll</h3><div class="preco">R$15,00</div><a href="#pix" class="btn">Comprar</a></div>
-<div class="card"><h3>HBO Max</h3><div class="preco">R$20,00</div><a href="#pix" class="btn">Comprar</a></div>
-</div>
-</section>
+<section id="admin" class="admin"><div class="admin-box">
+<h2>Painel Admin</h2>
+<input id="senha" type="password" placeholder="Digite a senha">
+<button class="btn" onclick="entrarAdmin()">Entrar</button>
+<div id="painel" style="display:none;margin-top:25px">
+<h3>Chave Pix</h3><input id="adminPix">
+<h3>Produtos</h3><div id="adminProdutos"></div>
+<button class="btn" onclick="salvarAdmin()">Salvar alterações</button>
+</div></div></section>
 
-<section id="pix">
-<h2>Pagamento via Pix</h2>
-<div class="pix">
-<p>Copie a chave Pix abaixo.</p>
-<input id="chavePix" value="71994141667" readonly>
-<button class="btn" onclick="copiarPix()">Copiar chave Pix</button>
-</div>
-</section>
-
+<a href="#pix" class="floating">Comprar agora</a>
 <footer>© 2026 ST Streaming - Todos os direitos reservados</footer>
 
 <script>
-function copiarPix(){
-const pix=document.getElementById("chavePix");
-pix.select();
-pix.setSelectionRange(0,99999);
-document.execCommand("copy");
-alert("Chave Pix copiada!");
-}
-</script>
+let dados=JSON.parse(localStorage.getItem("stDados"))||{pix:"71994141667",produtos:[
+{nome:"Netflix",preco:"25,00"},{nome:"Disney+",preco:"20,00"},{nome:"Globoplay",preco:"20,00"},{nome:"Paramount+",preco:"15,00"},{nome:"Prime Video",preco:"15,00"},{nome:"Crunchyroll",preco:"15,00"},{nome:"HBO Max",preco:"20,00"}]};
+function renderSite(){document.getElementById("chavePix").value=dados.pix;let html="";dados.produtos.forEach(p=>{html+=`<div class="card"><h3>${p.nome}</h3><div class="preco">R$ ${p.preco}</div><a href="#pix" class="btn">Comprar</a></div>`});document.getElementById("listaProdutos").innerHTML=html}
+function copiarPix(){const pix=document.getElementById("chavePix");pix.select();document.execCommand("copy");alert("Chave Pix copiada!")}
+function entrarAdmin(){if(document.getElementById("senha").value==="1234"){document.getElementById("painel").style.display="block";document.getElementById("adminPix").value=dados.pix;let html="";dados.produtos.forEach((p,i)=>{html+=`<input id="nome${i}" value="${p.nome}"><input id="preco${i}" value="${p.preco}">`});document.getElementById("adminProdutos").innerHTML=html}else alert("Senha incorreta")}
+function salvarAdmin(){dados.pix=document.getElementById("adminPix").value;dados.produtos.forEach((p,i)=>{p.nome=document.getElementById("nome"+i).value;p.preco=document.getElementById("preco"+i).value});localStorage.setItem("stDados",JSON.stringify(dados));alert("Salvo!");renderSite()}
+if(location.search.includes("admin")){document.getElementById("site").style.display="none";document.getElementById("admin").style.display="block"}
+renderSite();
+</script></body></html>
 
-</body>
-</html>
-+
+
+
+
+
