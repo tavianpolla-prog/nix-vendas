@@ -1,27 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>pedidos</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pedidos - ST Admin</title>
+
 <style>
 body{
 background:#0b0b0b;
 color:#d4af37;
-font-family:Arial;
-padding:30px;
+font-family:Arial,sans-serif;
+padding:20px;
 }
+
+h1{
+margin-bottom:20px;
+}
+
+.card{
+background:#151515;
+border:1px solid #d4af37;
+padding:18px;
+border-radius:10px;
+margin-bottom:12px;
+color:white;
+}
+
+.card b{
+color:#d4af37;
+}
+
+button{
+border:0;
+padding:10px 14px;
+border-radius:6px;
+font-weight:bold;
+margin:5px 3px 0 0;
+}
+
+.confirmar{background:#d4af37;color:#000}
+.chat{background:#007bff;color:white}
+.entregue{background:#28a745;color:white}
+.excluir{background:#dc3545;color:white}
+
 a{
 color:#d4af37;
+text-decoration:none;
+display:block;
+margin-bottom:20px;
 }
 </style>
 </head>
+
 <body>
 
-<h1>👑 ST ADMIN</h1>
-
-<h2>pedidos</h2>
-
 <a href="dashboard.html">⬅ Voltar ao Dashboard</a>
+
+<h1>📋 Pedidos</h1>
+
+<div class="card">
+<b>Pedido de exemplo</b><br><br>
+Cliente: João Silva<br>
+Produto: Netflix<br>
+Valor: R$ 9,00<br>
+Nome Pix: João Silva<br>
+Entrega: WhatsApp<br>
+Status: Processando pagamento<br><br>
+
+<button class="confirmar">✅ Confirmar</button>
+<button class="chat">💬 Abrir Chat</button>
+<button class="entregue">📦 Entregue</button>
+<button class="excluir">🗑️ Excluir</button>
+</div>
 
 </body>
 </html>
