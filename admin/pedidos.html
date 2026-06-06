@@ -124,7 +124,13 @@ document.getElementById("listaPedidos").innerHTML=html || "Nenhum pedido encontr
 }
 
 window.atualizarStatus = async function(id,status){
-await updateDoc(doc(db,"pedidos",id),{status});
+  let dados = { status };
+
+  if(status === "Pagamento confirmado"){
+    dados.chatAberto = true;
+  }
+
+  await updateDoc(doc(db,"pedidos",id),dados);
 };
 
 window.excluirPedido = async function(id){
