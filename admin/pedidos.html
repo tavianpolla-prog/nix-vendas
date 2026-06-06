@@ -6,91 +6,24 @@
 <title>Pedidos - ST Admin</title>
 
 <style>
-body{
-background:#0b0b0b;
-color:white;
-font-family:Arial,sans-serif;
-padding:20px;
-}
-
-h1{
-color:#d4af37;
-margin-bottom:20px;
-}
-
-.topo{
-background:#151515;
-border:1px solid #d4af37;
-padding:15px;
-border-radius:10px;
-margin-bottom:20px;
-}
-
-input,select{
-width:100%;
-padding:12px;
-margin-top:10px;
-background:#222;
-border:1px solid #d4af37;
-color:white;
-border-radius:8px;
-}
-
-.stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
-margin-bottom:20px;
-}
-
-.stat{
-background:#151515;
-border:1px solid #d4af37;
-padding:15px;
-border-radius:10px;
-text-align:center;
-}
-
-.numero{
-font-size:24px;
-font-weight:bold;
-color:#d4af37;
-}
-
-.pedido{
-background:#151515;
-border:1px solid #d4af37;
-padding:15px;
-border-radius:10px;
-margin-bottom:15px;
-}
-
-.pedido b{
-color:#d4af37;
-}
-
-button{
-border:0;
-padding:10px;
-margin-top:8px;
-margin-right:5px;
-border-radius:6px;
-font-weight:bold;
-cursor:pointer;
-}
-
-.confirmar{background:#d4af37;color:black;}
-.chat{background:#0d6efd;color:white;}
-.entregue{background:#198754;color:white;}
-.arquivar{background:#6c757d;color:white;}
-.excluir{background:#dc3545;color:white;}
-
-a{
-color:#d4af37;
-text-decoration:none;
-}
+body{background:#0b0b0b;color:white;font-family:Arial,sans-serif;padding:20px}
+h1,h2{color:#d4af37}
+a{color:#d4af37;text-decoration:none}
+.topo,.pedido{background:#151515;border:1px solid #d4af37;padding:15px;border-radius:10px;margin-bottom:15px}
+input,select{width:100%;padding:12px;margin-top:8px;background:#222;border:1px solid #d4af37;color:white;border-radius:8px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:15px 0}
+.stat{background:#151515;border:1px solid #d4af37;padding:15px;border-radius:10px;text-align:center}
+.numero{font-size:25px;font-weight:bold;color:#d4af37}
+button{border:0;padding:10px 12px;margin-top:8px;margin-right:4px;border-radius:6px;font-weight:bold;cursor:pointer}
+.confirmar{background:#d4af37;color:black}
+.recusar{background:#dc3545;color:white}
+.entregue{background:#198754;color:white}
+.arquivar{background:#6c757d;color:white}
+.excluir{background:#b00020;color:white}
+.chat{background:#0d6efd;color:white}
 </style>
 </head>
+
 <body>
 
 <a href="dashboard.html">⬅ Voltar ao Dashboard</a>
@@ -98,68 +31,115 @@ text-decoration:none;
 <h1>📋 Pedidos</h1>
 
 <div class="topo">
+<input id="busca" placeholder="🔍 Pesquisar por cliente, produto ou Pix" onkeyup="filtrarPedidos()">
 
-<input placeholder="🔍 Pesquisar pedido">
-
-<select>
-<option>Todos</option>
-<option>Processando</option>
-<option>Confirmados</option>
-<option>Entregues</option>
+<select id="filtro" onchange="filtrarPedidos()">
+<option value="Todos">Todos</option>
+<option value="Processando pagamento">Processando</option>
+<option value="Pagamento confirmado">Confirmados</option>
+<option value="Entregue">Entregues</option>
+<option value="Recusado">Recusados</option>
+<option value="Arquivado">Arquivados</option>
 </select>
-
 </div>
 
 <div class="stats">
-
-<div class="stat">
-<div class="numero">3</div>
-Processando
+<div class="stat"><div class="numero" id="total">0</div>Total</div>
+<div class="stat"><div class="numero" id="processando">0</div>Processando</div>
+<div class="stat"><div class="numero" id="confirmados">0</div>Confirmados</div>
+<div class="stat"><div class="numero" id="entregues">0</div>Entregues</div>
 </div>
 
-<div class="stat">
-<div class="numero">8</div>
-Confirmados
-</div>
+<div id="listaPedidos">Carregando pedidos...</div>
 
-<div class="stat">
-<div class="numero">15</div>
-Entregues
-</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
-</div>
+const firebaseConfig = {
+apiKey:"AIzaSyBDmMHv_QDAgpJROzMiDlqSyahhRcWL1v0",
+authDomain:"st-streaming-9acd9.firebaseapp.com",
+projectId:"st-streaming-9acd9",
+storageBucket:"st-streaming-9acd9.firebasestorage.app",
+messagingSenderId:"695341762827",
+appId:"1:695341762827:web:d68e0e626e83f8b2e83a0e"
+};
 
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let pedidos = [];
+
+onSnapshot(collection(db,"pedidos"), snap => {
+pedidos = [];
+snap.forEach(d => {
+pedidos.push({id:d.id,...d.data()});
+});
+renderizarPedidos();
+});
+
+function renderizarPedidos(){
+let filtro = document.getElementById("filtro").value;
+let busca = document.getElementById("busca").value.toLowerCase();
+
+let total=0,processando=0,confirmados=0,entregues=0;
+let html="";
+
+pedidos.forEach(p=>{
+total++;
+if(p.status==="Processando pagamento")processando++;
+if(p.status==="Pagamento confirmado")confirmados++;
+if(p.status==="Entregue")entregues++;
+
+let texto = `${p.clienteNome||""} ${p.produto||""} ${p.nomePix||""}`.toLowerCase();
+
+if(filtro !== "Todos" && p.status !== filtro) return;
+if(busca && !texto.includes(busca)) return;
+
+html += `
 <div class="pedido">
+<b>Cliente:</b> ${p.clienteNome || "Não informado"}<br>
+<b>Produto:</b> ${p.produto || "Não informado"}<br>
+<b>Valor:</b> R$ ${p.preco || 0}<br>
+<b>Nome Pix:</b> ${p.nomePix || "Não informado"}<br>
+<b>Entrega:</b> ${p.formaEntrega || "Não informado"}<br>
+<b>Contato:</b> ${p.contatoEntrega || "Chat da plataforma"}<br>
+<b>Status:</b> ${p.status || "Processando pagamento"}<br>
 
-<b>Cliente:</b> João Silva<br>
-<b>Produto:</b> Netflix<br>
-<b>Valor:</b> R$ 9,00<br>
-<b>Entrega:</b> WhatsApp<br>
-<b>Status:</b> Processando<br>
-
-<button class="confirmar">✅ Confirmar</button>
-<button class="chat">💬 Chat</button>
-<button class="entregue">📦 Entregue</button>
-<button class="arquivar">🗄️ Arquivar</button>
-<button class="excluir">🗑️ Excluir</button>
-
+<button class="confirmar" onclick="atualizarStatus('${p.id}','Pagamento confirmado')">✅ Confirmar</button>
+<button class="chat" onclick="abrirChat('${p.id}')">💬 Chat</button>
+<button class="entregue" onclick="atualizarStatus('${p.id}','Entregue')">📦 Entregue</button>
+<button class="arquivar" onclick="atualizarStatus('${p.id}','Arquivado')">🗄️ Arquivar</button>
+<button class="recusar" onclick="atualizarStatus('${p.id}','Recusado')">❌ Recusar</button>
+<button class="excluir" onclick="excluirPedido('${p.id}')">🗑️ Excluir</button>
 </div>
+`;
+});
 
-<div class="pedido">
+document.getElementById("total").innerText=total;
+document.getElementById("processando").innerText=processando;
+document.getElementById("confirmados").innerText=confirmados;
+document.getElementById("entregues").innerText=entregues;
+document.getElementById("listaPedidos").innerHTML=html || "Nenhum pedido encontrado.";
+}
 
-<b>Cliente:</b> Maria Souza<br>
-<b>Produto:</b> Discord<br>
-<b>Valor:</b> R$ 15,00<br>
-<b>Entrega:</b> Telegram<br>
-<b>Status:</b> Confirmado<br>
+window.atualizarStatus = async function(id,status){
+await updateDoc(doc(db,"pedidos",id),{status});
+};
 
-<button class="confirmar">✅ Confirmar</button>
-<button class="chat">💬 Chat</button>
-<button class="entregue">📦 Entregue</button>
-<button class="arquivar">🗄️ Arquivar</button>
-<button class="excluir">🗑️ Excluir</button>
+window.excluirPedido = async function(id){
+if(confirm("Deseja excluir este pedido?")){
+await deleteDoc(doc(db,"pedidos",id));
+}
+};
 
-</div>
+window.abrirChat = function(id){
+localStorage.setItem("pedidoChat",id);
+window.location.href="chat.html";
+};
+
+window.filtrarPedidos = renderizarPedidos;
+</script>
 
 </body>
 </html>
