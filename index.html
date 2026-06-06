@@ -195,12 +195,11 @@ snap.forEach(d=>{
 const p=d.data();
 if(p.ativo!==false && p.categoria===categoriaAtual){
 html+=`
-<div class="produto">
-<h3>${p.categoria==="Streaming"?"📺":"🌐"} ${p.nome}</h3>
-<p>Categoria: ${p.categoria}</p>
-<p>Estoque: ${p.estoque || 0}</p>
-<div class="preco">R$ ${p.preco}</div>
-<button onclick="comprar('${p.nome}',${p.preco})">Comprar</button>
+<div class="produto"
+onclick="comprar('${p.nome}',${p.preco})">
+
+${p.categoria==="Streaming"?"📺":"🌐"} ${p.nome}
+
 </div>`;
 }
 });
