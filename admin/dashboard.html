@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ST Streaming Admin</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0b0b0b;
+color:white;
+display:flex;
+}
+
+.sidebar{
+width:260px;
+height:100vh;
+background:#111;
+border-right:1px solid #d4af37;
+padding:20px;
+position:fixed;
+}
+
+.logo{
+font-size:26px;
+font-weight:900;
+color:#d4af37;
+margin-bottom:30px;
+}
+
+.menu a{
+display:block;
+padding:15px;
+margin-bottom:8px;
+color:white;
+text-decoration:none;
+border-radius:8px;
+transition:.3s;
+}
+
+.menu a:hover{
+background:#d4af37;
+color:black;
+}
+
+.main{
+margin-left:260px;
+padding:30px;
+width:100%;
+}
+
+.titulo{
+font-size:35px;
+font-weight:900;
+color:#d4af37;
+margin-bottom:20px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+
+.card{
+background:#181818;
+border:1px solid #d4af37;
+padding:25px;
+border-radius:12px;
+}
+
+.card h3{
+color:#d4af37;
+margin-bottom:10px;
+}
+
+.numero{
+font-size:34px;
+font-weight:900;
+}
+
+.tabela{
+background:#181818;
+border:1px solid #d4af37;
+margin-top:30px;
+padding:20px;
+border-radius:12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+👑 ST ADMIN
+</div>
+
+<div class="menu">
+<a href="dashboard.html">📊 Dashboard</a>
+<a href="pedidos.html">📋 Pedidos</a>
+<a href="chat.html">💬 Chat</a>
+<a href="produtos.html">📦 Produtos</a>
+<a href="promocoes.html">📢 Promoções</a>
+<a href="usuarios.html">👥 Usuários</a>
+<a href="avaliacoes.html">⭐ Avaliações</a>
+<a href="configuracoes.html">⚙️ Configurações</a>
+</div>
+
+</div>
+
+<div class="main">
+
+<div class="titulo">
+Dashboard
+</div>
+
+<div class="cards">
+
+<div class="card">
+<h3>Pedidos</h3>
+<div class="numero">0</div>
+</div>
+
+<div class="card">
+<h3>Processando</h3>
+<div class="numero">0</div>
+</div>
+
+<div class="card">
+<h3>Entregues</h3>
+<div class="numero">0</div>
+</div>
+
+<div class="card">
+<h3>Faturamento</h3>
+<div class="numero">R$ 0</div>
+</div>
+
+</div>
+
+<div class="tabela">
+<h2>Últimos Pedidos</h2>
+<p>Nenhum pedido encontrado.</p>
+</div>
+
+</div>
+
+</body>
+</html>
+
