@@ -46,14 +46,35 @@ button{background:#00cfff;color:white;border:0;padding:14px;border-radius:12px;f
 <div class="close" onclick="fecharMenu()">×</div>
 <div class="logo">NIX SOCIAIS</div>
 <div class="search">🔍 Buscar serviços...</div>
-<a class="menuItem" href="#" onclick="mostrarSecao('home')">🏠 Home</a>
-<a class="menuItem" href="#" onclick="mostrarSecao('pedidos')">📦 Pedidos</a>
-<a class="menuItem" href="#" onclick="mostrarSecao('saldo')">💰 Adicionar Saldo</a>
-<a class="menuItem" href="#" onclick="mostrarSecao('conta')">👤 Minha Conta</a>
-<a class="menuItem" href="https://wa.me/5571994141667">💬 Suporte</a>
+<a class="menuItem" href="#" onclick="mostrarSecao('home')">
+🏠 Home
+</a>
+
+<a class="menuItem" href="#" onclick="mostrarSecao('saldo')">
+💰 Adicionar Saldo
+</a>
+
+<a class="menuItem" href="#"
+onclick="mostrarSecao('cadastro')">
+<button onclick="criarConta()">
+Criar Conta
+</button>
+<a class="menuItem" href="#"
+onclick="mostrarSecao('login')">
+<button>
+Entrar
+</button>
+
+<a class="menuItem" href="#" onclick="mostrarSecao('pedidos')">
+📦 Meus Pedidos
+</a>
+
+<a class="menuItem"
+href="https://wa.me/5571994141667">
+💬 Suporte
+</a>
 <div class="saldo">💰 R$ <span id="saldoTopo">0,00</span></div>
 </div>
-
 <section id="home" class="secao">
 <div class="hero">
 <h1>Serviços digitais com saldo</h1>
@@ -66,15 +87,35 @@ button{background:#00cfff;color:white;border:0;padding:14px;border-radius:12px;f
 </div>
 
 <div class="section">
-<h2>Categorias</h2>
+<h2>Serviços Disponíveis</h2>
 <div class="cats">
-<div class="cat" onclick="filtrarCategoria('Streaming')">📺 Streaming</div>
-<div class="cat" onclick="filtrarCategoria('Serviços Sociais')">🌐 Serviços Digitais</div>
+<div class="cat">🔥 WhatsApp</div>
+<div class="cat">🔥 Instagram</div>
+<div class="cat">🔥 Gmail</div>
+<div class="cat">🔥 YouTube</div>
+<div class="cat">🔥 Netflix</div>
+<div class="cat">🔥 Nubank</div>
+<div class="cat">🔥 iFood</div>
+<div class="cat">🔥 OpenAI</div>
+<div class="cat">🔥 GovBR</div>
+<div class="cat">🔥 Telegram</div>
 </div>
 </div>
 
 <div class="section">
 <h2 id="tituloProdutos">Em Alta</h2>
+<div class="card">
+
+<h3>🔥 Mais Vendidos</h3>
+
+<div>📱 WhatsApp</div>
+<div>🏦 Nubank</div>
+<div>🍔 iFood</div>
+<div>📸 Instagram</div>
+<div>▶️ YouTube</div>
+<div>🎬 Netflix</div>
+
+</div>
 <div id="listaProdutos">Carregando produtos...</div>
 </div>
 </section><section id="saldo" class="secao hidden">
@@ -100,12 +141,24 @@ Continuar
 
 </section>
 
-<section id="conta" class="secao hidden">
+<section id="conta"
 
 <div class="card">
 
 <h2>👤 Minha Conta</h2>
+<div style="background:#080808;border:1px solid #222;border-radius:16px;padding:18px;margin:15px 0">
 
+<h3 style="color:#00d9ff">👤 Perfil</h3>
+
+<p>🏆 Nível: Cliente Bronze</p>
+<p>📦 Pedidos: 0</p>
+<p>💰 Recargas: R$ 0,00</p>
+<p>⭐ Avaliação: 5.0</p>
+
+</div>
+<div style="margin:15px 0;font-size:22px;color:#00d9ff">
+💰 Saldo: R$ <span id="saldoConta">0,00</span>
+</div>
 <input id="emailConta"
 placeholder="Email">
 
@@ -122,11 +175,129 @@ placeholder="Telefone">
 <button onclick="mostrarSecao('saldo')">
 💰 Adicionar Saldo
 </button>
+<button>
+📦 Histórico de Pedidos
+</button>
+
+<button>
+💰 Extrato de Saldo
+</button>
+
+<button>
+❤️ Favoritos
+<button>
+🎁 Cupons
+</button>
+
+<button>
+📞 Suporte
+</button>
+
+<button>
+📢 Avisos
+</button>
+
+<button>
+🏆 Programa VIP
+</button>
+
+<button>
+🔔 Notificações
+</button>
+
+<button>
+🌙 Aparência
+</button>
+
+<button>
+📱 Dispositivos
+</button>
+
+<button>
+🛡️ Segurança
+</button>
+
+<button>
+⚙️ Configurações
+</button>
+
+<button>
+🚪 Sair
+</button>
+</button>
+
+<button>
+🎁 Cupons
+</button>
+
+<button>
+📞 Suporte
+</button>
+
+<button>
+📢 Avisos
+</button>
+
+<button>
+🔐 Alterar Senha
+</button>
+
+<button>
+🚪 Sair
+</button>
+<button>
+🔐 Alterar Senha
+</button>
+
+<button>
+🚪 Sair
+</button>
+</div>
+
+</section>
+<section id="login" class="secao hidden">
+
+<div class="card">
+
+<h2>🔐 Entrar</h2>
+
+<input id="loginEmail" placeholder="Email">
+
+<input id="loginSenha"
+type="password"
+placeholder="Senha">
+
+<button>
+Entrar
+</button>
 
 </div>
 
 </section>
 
+<section id="cadastro" class="secao hidden">
+
+<div class="card">
+
+<h2>📝 Criar Conta</h2>
+
+<input id="cadNome"
+placeholder="Nome">
+
+<input id="cadEmail"
+placeholder="Email">
+
+<input id="cadSenha"
+type="password"
+placeholder="Senha">
+
+<button>
+Criar Conta
+</button>
+
+</div>
+
+</section>
 <section id="pedidos" class="secao hidden">
 
 <div class="card">
@@ -150,7 +321,7 @@ href="https://wa.me/5571994141667">
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
 
@@ -195,7 +366,48 @@ window.filtrarCategoria=function(cat){
 categoriaAtual=cat;
 
 document.getElementById("tituloProdutos").innerHTML=cat;
+window.criarConta = async function(){
 
+const nome = document.getElementById("cadNome").value;
+const email = document.getElementById("cadEmail").value;
+const senha = document.getElementById("cadSenha").value;
+
+if(!nome || !email || !senha){
+alert("Preencha todos os campos.");
+return;
+}
+
+await setDoc(doc(db,"usuarios",email),{
+nome,
+email,
+senha,
+saldo:0,
+criadoEm:serverTimestamp()
+});
+
+localStorage.setItem("usuarioLogado",email);
+
+alert("Conta criada com sucesso!");
+mostrarSecao("conta");
+
+}
+
+window.entrarConta = function(){
+
+const email = document.getElementById("loginEmail").value;
+const senha = document.getElementById("loginSenha").value;
+
+if(!email || !senha){
+alert("Preencha email e senha.");
+return;
+}
+
+localStorage.setItem("usuarioLogado",email);
+
+alert("Login realizado!");
+mostrarSecao("conta");
+
+}
 carregarProdutos();
 
 }
