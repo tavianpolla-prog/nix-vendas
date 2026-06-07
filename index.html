@@ -26,34 +26,22 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); -webkit-font-smoothing: antialiased; }
         body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; padding-top: 115px; }
 
-        /* BANNER DE OFERTA RELÂMPAGO (URGÊNCIA) */
-        .promo-ticker {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(90deg, #7c3aed, #ea580c);
-            color: white;
-            text-align: center;
-            padding: 8px 10px;
-            font-size: 13px;
-            font-weight: 700;
-            z-index: 1100;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            letter-spacing: 0.5px;
-        }
+        /* BANNER DE OFERTA RELÂMPAGO */
+        .promo-ticker { position: fixed; top: 0; left: 0; width: 100%; background: linear-gradient(90deg, #7c3aed, #ea580c); color: white; text-align: center; padding: 8px 10px; font-size: 13px; font-weight: 700; z-index: 1100; display: flex; justify-content: center; align-items: center; gap: 10px; letter-spacing: 0.5px; }
         .timer-box { background: rgba(0,0,0,0.4); padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 14px; color: var(--warning); }
 
         /* NAVBAR */
         header { position: fixed; top: 35px; left: 0; width: 100%; height: 80px; background: rgba(5, 7, 15, 0.85); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); display: flex; justify-content: space-between; align-items: center; padding: 0 6%; z-index: 1000; }
         .logo { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; text-decoration: none; color: var(--text-main); }
         .logo span { color: var(--primary); }
-        .nav-actions { display: flex; align-items: center; gap: 16px; }
-        .nav-btn { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-main); padding: 10px 18px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s ease; }
+        .nav-actions { display: flex; align-items: center; gap: 12px; }
+        
+        .nav-btn { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-main); padding: 10px 14px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s ease; }
         .nav-btn:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--primary); }
+        
+        .nav-btn.support { color: #25d366; border-color: rgba(37, 211, 102, 0.3); }
+        .nav-btn.support:hover { background: rgba(37, 211, 102, 0.1); border-color: #25d366; }
+        
         .cart-badge { background-color: var(--secondary); color: white; font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 20px; }
 
         /* HERO BANNER */
@@ -78,7 +66,6 @@
         .product-card:hover { transform: translateY(-5px); border-color: rgba(139, 92, 246, 0.3); }
         .product-banner { height: 130px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; position: relative; }
 
-        /* Banners */
         .b-netflix { background: linear-gradient(135deg, #e50914, #450a0a); color: rgba(255,255,255,0.15); }
         .b-prime { background: linear-gradient(135deg, #00a8e1, #0a3a4a); color: rgba(255,255,255,0.15); }
         .b-globoplay { background: linear-gradient(135deg, #da251c, #ff6b00); color: rgba(255,255,255,0.15); }
@@ -89,9 +76,7 @@
         .b-ifood { background: linear-gradient(135deg, #ea1d2c, #7a0000); color: rgba(255,255,255,0.15); }
         .b-nubank { background: linear-gradient(135deg, #8a05be, #3d0056); color: rgba(255,255,255,0.15); }
 
-        /* GATILHO DE ESCASSEZ (BADGE ESTOQUE) */
         .stock-badge { position: absolute; top: 15px; right: 15px; background: rgba(239, 68, 68, 0.2); border: 1px solid var(--danger); color: #fca5a5; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 30px; display: flex; align-items: center; gap: 4px; }
-
         .product-details { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
         .product-title { font-size: 17px; font-weight: 600; margin-bottom: 15px; }
         .product-price-row { margin-top: auto; display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.04); }
@@ -99,58 +84,35 @@
         .add-btn { background: var(--primary); color: white; border: none; width: 38px; height: 38px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s;}
         .add-btn:hover { background: var(--primary-hover); transform: scale(1.1); }
 
-        /* AVALIAÇÕES */
-        .reviews-section { padding: 40px 6%; background: rgba(255,255,255,0.01); border-top: 1px solid rgba(255,255,255,0.03); }
-        .reviews-title { text-align: center; margin-bottom: 30px; font-size: 24px; font-weight: 700; }
-        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .review-card { background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.02); }
-        .review-user { font-weight: 600; font-size: 15px; margin-bottom: 6px; display: flex; justify-content: space-between; }
-        .review-stars { color: #fbbf24; font-size: 12px; }
-        .review-text { color: var(--text-muted); font-size: 13px; line-height: 1.4; margin-top: 8px; }
-
-        /* FAQ */
-        .faq-section { padding: 60px 6% 100px 6%; max-width: 700px; margin: 0 auto; }
-        .faq-title { text-align: center; margin-bottom: 35px; font-size: 24px; font-weight: 700; }
-        .faq-item { background: var(--bg-card); border-radius: 12px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.02); overflow: hidden; }
-        .faq-question { padding: 18px; font-weight: 600; font-size: 15px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .faq-answer { padding: 0 18px; max-height: 0; overflow: hidden; transition: all 0.3s ease; color: var(--text-muted); font-size: 14px; line-height: 1.5; }
-        .faq-item.active .faq-answer { padding: 0 18px 18px 18px; max-height: 120px; }
-        .faq-item.active .faq-question i { transform: rotate(180deg); color: var(--primary); }
-        .faq-question i { transition: transform 0.3s; font-size: 14px; }
-
-        /* TOAST POPUPS */
+        /* TOAST POPUPS E SIDEBARS */
         #toastContainer { position: fixed; bottom: 30px; right: 30px; z-index: 3000; display: flex; flex-direction: column; gap: 10px; }
         .toast { background: #0e1630; border-left: 4px solid var(--primary); color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 10px; transform: translateX(120%); transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
         .toast.show { transform: translateX(0); }
         .toast.success { border-left-color: var(--success); }
         .toast.danger { border-left-color: var(--danger); }
 
-        /* PIX AREA COM QR CODE SIMULADO */
-        .pix-container { background: rgba(16, 185, 129, 0.04); border: 1px dashed var(--success); padding: 15px; border-radius: 12px; margin-top: 15px; text-align: center; }
-        .pix-title { font-size: 13px; font-weight: 700; color: var(--success); margin-bottom: 8px; }
-        
-        /* QR CODE SIMULADO (DESIGN ULTRA PROFISSIONAL) */
-        .qrcode-mock-wrapper { width: 130px; height: 130px; background: white; margin: 12px auto; padding: 8px; border-radius: 8px; display: flex; align-items: center; justify-content: center; position: relative; border: 2px solid var(--success); }
-        .qrcode-mock { width: 100%; height: 100%; border: 3px double #000; background-image: radial-gradient(#000 25%, transparent 25%), radial-gradient(#000 25%, transparent 25%); background-size: 8px 8px; background-position: 0 0, 4px 4px; opacity: 0.85; }
-        .qrcode-corner { position: absolute; width: 24px; height: 24px; border: 4px solid #000; background: white; }
-        .qc-tl { top: 8px; left: 8px; }
-        .qc-tr { top: 8px; right: 8px; }
-        .qc-bl { bottom: 8px; left: 8px; }
-        
-        .pix-key { background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; font-size: 12px; font-family: monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.04); }
-        .pix-copy-btn { background: var(--success); border: none; color: white; padding: 10px 16px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; width: 100%; justify-content: center; }
-
-        /* SIDEBARS */
         .panel-sidebar { position: fixed; top: 0; right: -460px; width: 100%; max-width: 460px; height: 100vh; background: #090c1a; border-left: 1px solid rgba(255, 255, 255, 0.05); z-index: 2000; box-shadow: -20px 0 50px rgba(0,0,0,0.6); transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; padding: 30px; }
         .panel-sidebar.open { right: 0; }
         .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .close-btn { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-main); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;}
 
+        /* ÁREA DO CLIENTE & PIX */
         .auth-form { display: flex; flex-direction: column; gap: 16px; }
         .input-group { display: flex; flex-direction: column; gap: 6px; }
         .input-group label { font-size: 13px; color: var(--text-muted); font-weight: 500; }
         .input-group input { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); padding: 12px; border-radius: 12px; color: white; outline: none; }
         .submit-btn { background: var(--primary); border: none; color: white; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+
+        .pix-container { background: rgba(16, 185, 129, 0.04); border: 1px dashed var(--success); padding: 15px; border-radius: 12px; margin-top: 10px; text-align: center; }
+        .pix-title { font-size: 13px; font-weight: 700; color: var(--success); margin-bottom: 8px; }
+        .qrcode-mock-wrapper { width: 130px; height: 130px; background: white; margin: 10px auto; padding: 8px; border-radius: 8px; display: flex; align-items: center; justify-content: center; position: relative; border: 2px solid var(--success); }
+        .qrcode-mock { width: 100%; height: 100%; border: 3px double #000; background-image: radial-gradient(#000 25%, transparent 25%), radial-gradient(#000 25%, transparent 25%); background-size: 8px 8px; background-position: 0 0, 4px 4px; opacity: 0.85; }
+        .qrcode-corner { position: absolute; width: 24px; height: 24px; border: 4px solid #000; background: white; }
+        .qc-tl { top: 8px; left: 8px; }
+        .qc-tr { top: 8px; right: 8px; }
+        .qc-bl { bottom: 8px; left: 8px; }
+        .pix-key { background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; font-size: 12px; font-family: monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.04); }
+        .pix-copy-btn { background: var(--success); border: none; color: white; padding: 10px 16px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; width: 100%; justify-content: center; }
 
         .chat-container { display: flex; flex-direction: column; height: 100%; background: #0e1224; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); padding: 15px; overflow: hidden; }
         .chat-messages { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 5px; margin-bottom: 15px; }
@@ -169,7 +131,16 @@
         .cart-overlay.show { display: block; }
         .hidden { display: none !important; }
         footer { background: #020307; padding: 30px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.03); color: var(--text-muted); font-size: 13px; }
-        @media (max-width: 768px) { .panel-sidebar { max-width: 100%; right: -100%; } .hero h1 { font-size: 2.2rem; } header { top: 38px; } body { padding-top: 120px; } }
+        
+        /* Ajustes mobile para não amassar os botões */
+        @media (max-width: 768px) { 
+            .panel-sidebar { max-width: 100%; right: -100%; } 
+            .hero h1 { font-size: 2.2rem; } 
+            header { top: 38px; padding: 0 3%; } 
+            .nav-actions { gap: 6px; }
+            .nav-btn span { display: none; } /* Oculta texto em telas pequenas para caber os 3 botões */
+            body { padding-top: 120px; } 
+        }
     </style>
 </head>
 <body>
@@ -182,15 +153,18 @@
         <div class="timer-box" id="promoTimer">14:59</div>
     </div>
 
-    <a href="https://wa.me/5500000000000" class="support-float-btn" target="_blank">
+    <a href="https://wa.me/5571994141667?text=Olá,%20NIX%20Vendas!%20Preciso%20de%20suporte." class="support-float-btn" target="_blank">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
     <header>
         <a href="#" class="logo">NIX<span>VENDAS</span></a>
         <div class="nav-actions">
+            <button class="nav-btn support" onclick="window.open('https://wa.me/5571994141667?text=Olá,%20preciso%20de%20ajuda%20com%20meu%20pedido!', '_blank')">
+                <i class="fa-brands fa-whatsapp"></i> <span>Suporte</span>
+            </button>
             <button class="nav-btn" id="openCartBtn">
-                <i class="fa-solid fa-shopping-cart"></i> Carrinho <span class="cart-badge" id="cartBadge">0</span>
+                <i class="fa-solid fa-shopping-cart"></i> <span class="cart-badge" id="cartBadge">0</span>
             </button>
             <button class="nav-btn" id="loginNavBtn" onclick="toggleSidebar('authSidebar')">
                 <i class="fa-solid fa-user"></i> <span id="userBtnText">Área Cliente</span>
@@ -200,7 +174,7 @@
 
     <section class="hero">
         <h1>Sua Plataforma Digital <span>Completa</span></h1>
-        <p>Contas premium de streaming e ativações de serviços digitais com entrega rápida.</p>
+        <p>Contas premium de streaming e ativações de serviços digitais com entrega rápida e sem burocracia.</p>
         <div class="search-container">
             <i class="fa-solid fa-magnifying-glass"></i>
             <input type="text" class="search-input" id="searchBar" placeholder="Pesquisar streaming ou serviço..." oninput="filtrarPesquisa()">
@@ -219,40 +193,6 @@
     <main class="store-container">
         <div class="products-grid" id="productsGrid"></div>
     </main>
-
-    <section class="reviews-section">
-        <h3 class="reviews-title">Quem compra, aprova! ⭐</h3>
-        <div class="reviews-grid">
-            <div class="review-card">
-                <div class="review-user">@tavian_prog <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
-                <p class="review-text">Entrega no chat interno em menos de 1 minuto. Ativação do WhatsApp funcionando perfeito!</p>
-            </div>
-            <div class="review-card">
-                <div class="review-user">@luiz_fernando <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
-                <p class="review-text">Melhor preço de tela Privada da Netflix. O sistema de chat pra falar com suporte é muito bom.</p>
-            </div>
-            <div class="review-card">
-                <div class="review-user">@carla_viana <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
-                <p class="review-text">Comprei o cupom do iFood e ativou na hora. Site muito bonito e rápido.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="faq-section">
-        <h3 class="faq-title">Dúvidas Frequentes 🤔</h3>
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(this)">Qual o prazo de entrega dos produtos? <i class="fa-solid fa-chevron-down"></i></div>
-            <div class="faq-answer">Nossos envios são imediatos! Assim que você finaliza a compra e envia o comprovante de pagamento no chat da sua Área do Cliente, liberamos as credenciais de acesso.</div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(this)">As telas de streaming têm garantia? <i class="fa-solid fa-chevron-down"></i></div>
-            <div class="faq-answer">Sim! Todas as contas de streaming possuem garantia total de 30 dias com suporte completo direto pelo nosso chat ou WhatsApp flutuante.</div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(this)">Como funcionam as ativações de serviços? <i class="fa-solid fa-chevron-down"></i></div>
-            <div class="faq-answer">Para ativações como WhatsApp e Telegram, fornecemos o número virtual e o código de confirmação SMS diretamente no chat privado de forma segura.</div>
-        </div>
-    </section>
 
     <div class="panel-sidebar" id="cartSidebar">
         <div class="panel-header">
@@ -280,15 +220,15 @@
                     <label>Seu Nome ou Usuário</label>
                     <input type="text" id="authUsername" placeholder="Ex: marcos_silva">
                 </div>
-                <button class="submit-btn" onclick="loginCliente()">Entrar / Cadastrar</button>
+                <button class="submit-btn" onclick="loginCliente()">Entrar na Conta</button>
             </div>
         </div>
 
         <div id="clientPanel" class="hidden" style="display: flex; flex-direction: column; height: 100%; overflow: hidden;">
-            <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom:1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;">
+            <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom:1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;">
                 <div>
                     <p style="font-size: 14px; color: var(--text-muted);">Bem-vindo,</p>
-                    <strong id="loggedUser" style="color:var(--primary); font-size: 18px;"></strong>
+                    <strong id="loggedUser" style="color:var(--primary); font-size: 16px;"></strong>
                 </div>
                 <button class="nav-btn" style="padding:6px 12px; font-size:12px; color:var(--danger); border-color:var(--danger);" onclick="logoutCliente()">Sair</button>
             </div>
@@ -296,24 +236,22 @@
             <div id="pixArea" class="hidden flex-shrink: 0;">
                 <div class="pix-container">
                     <p class="pix-title"><i class="fa-solid fa-qrcode"></i> Pagamento PIX Garantido</p>
-                    
                     <div class="qrcode-mock-wrapper">
                         <div class="qrcode-mock"></div>
                         <div class="qrcode-corner qc-tl"></div>
                         <div class="qrcode-corner qc-tr"></div>
                         <div class="qrcode-corner qc-bl"></div>
                     </div>
-
                     <div class="pix-key" id="pixKeyValue">00020126360014BR.GOV.BCB.PIX0114nixvendaspix995204000053039865802BR5910NixVendas6008Salvador62070503nix</div>
                     <button class="pix-copy-btn" onclick="copiarPix()"><i class="fa-solid fa-copy"></i> Copiar Código PIX</button>
                 </div>
             </div>
             
-            <h4 style="margin:15px 0 10px 0; font-size:14px; color: var(--secondary); flex-shrink: 0;"><i class="fa-solid fa-comments"></i> Chat de Entrega</h4>
+            <h4 style="margin:10px 0; font-size:14px; color: var(--secondary); flex-shrink: 0;"><i class="fa-solid fa-comments"></i> Confirmação Inteligente</h4>
             <div class="chat-container">
                 <div class="chat-messages" id="chatMessages"></div>
                 <div class="chat-input-row">
-                    <input type="text" id="chatInputField" placeholder="Digite aqui...">
+                    <input type="text" id="chatInputField" placeholder="Digite apenas o NOME de quem fez o PIX...">
                     <button class="send-msg-btn" onclick="enviarMensagemChat()"><i class="fa-solid fa-paper-plane"></i></button>
                 </div>
             </div>
@@ -321,7 +259,7 @@
     </div>
 
     <script>
-        // BANCO DE DADOS COM DEFINIÇÃO DE ESTOQUE (ESCASSEZ)
+        // BANCO DE DADOS
         const database = [
             { id: 1, title: "Netflix Premium - Tela Privada", price: 19.90, category: "streaming", banner: "b-netflix", icon: "fa-brands fa-netflix", stock: 3 },
             { id: 2, title: "Amazon Prime Video - 30 Dias", price: 12.90, category: "streaming", banner: "b-prime", icon: "fa-solid fa-play", stock: 5 },
@@ -344,7 +282,7 @@
         const cartTotal = document.getElementById('cartTotal');
         const chatMessages = document.getElementById('chatMessages');
 
-        // RECURSO: TIMER RECORESIVO RELÂMPAGO
+        // TIMER
         function startTimer(duration, display) {
             let timer = duration, minutes, seconds;
             setInterval(function () {
@@ -353,7 +291,7 @@
                 minutes = minutes < 10 ? "0" + minutes : minutes;
                 seconds = seconds < 10 ? "0" + seconds : seconds;
                 display.textContent = minutes + ":" + seconds;
-                if (--timer < 0) { timer = duration; } // Reseta em loop para manter a escassez ativa
+                if (--timer < 0) { timer = duration; } 
             }, 1000);
         }
 
@@ -374,10 +312,6 @@
                 toast.classList.remove('show');
                 setTimeout(() => toast.remove(), 300);
             }, 3000);
-        }
-
-        function toggleFaq(element) {
-            element.parentElement.classList.toggle('active');
         }
 
         function filtrarPesquisa() {
@@ -465,13 +399,18 @@
                 document.getElementById('authForms').classList.add('hidden');
                 document.getElementById('clientPanel').classList.remove('hidden');
                 document.getElementById('loggedUser').textContent = usuarioLogado;
-                document.getElementById('userBtnText').textContent = usuarioLogado;
+                
+                // Mudar texto no topo mantendo estilo
+                let userBtnText = document.getElementById('userBtnText');
+                if(userBtnText) userBtnText.textContent = usuarioLogado;
+                
                 carregarMensagensChat();
             } else {
                 document.getElementById('authTitle').textContent = "Acesse sua Conta";
                 document.getElementById('authForms').classList.remove('hidden');
                 document.getElementById('clientPanel').classList.add('hidden');
-                document.getElementById('userBtnText').textContent = "Área Cliente";
+                let userBtnText = document.getElementById('userBtnText');
+                if(userBtnText) userBtnText.textContent = "Área Cliente";
                 document.getElementById('pixArea').classList.add('hidden');
             }
         }
@@ -511,7 +450,7 @@
             guardarMensagemNoChat(usuarioLogado, msgChat, 'client');
             
             setTimeout(() => {
-                guardarMensagemNoChat(usuarioLogado, "⚡ *BOT ADMIN:* Pedido recebido com sucesso! O QR Code e o código PIX Copia e Cola foram liberados no topo. Efetue o pagamento e envie o comprovante aqui para fazermos o envio!", 'admin');
+                guardarMensagemNoChat(usuarioLogado, "⚡ *BOT ADMIN:* O código PIX Copia e Cola já está no topo deste painel! Faça o pagamento e **NÃO é necessário enviar o comprovante**, basta digitar o **NOME** de quem fez o Pix aqui mesmo para o nosso sistema detectar, ou nos chame no WhatsApp de suporte! 🚀", 'admin');
             }, 1000);
 
             carrinho = [];
@@ -539,7 +478,10 @@
         function carregarMensagensChat() {
             if(!usuarioLogado) return;
             let historico = JSON.parse(localStorage.getItem(`chat_${usuarioLogado}`)) || [];
-            let baseHtml = `<div class="msg admin">Olá! Envie o seu comprovante aqui para liberarmos os seus serviços imediatamente!</div>`;
+            
+            // Mensagem base atualizada para as regras novas
+            let baseHtml = `<div class="msg admin">Olá! Faça seu pedido. Não é necessário enviar o comprovante: basta digitar o NOME de quem fez o Pix aqui no chat ou enviar o comprovante direto no nosso WhatsApp clicando no ícone verde!</div>`;
+            
             chatMessages.innerHTML = baseHtml + historico.map(m => `<div class="msg ${m.sender}">${m.text.replace(/\\n/g, '<br>')}</div>`).join('');
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
@@ -550,6 +492,13 @@
             if(!texto) return;
             guardarMensagemNoChat(usuarioLogado, texto, 'client');
             campo.value = '';
+            
+            // Simulação de que o nome foi recebido pelo sistema de detecção automática
+            if(document.getElementById('pixArea').classList.contains('hidden') === false) {
+                 setTimeout(() => {
+                    guardarMensagemNoChat(usuarioLogado, `✅ O nome **${texto.split(" ")[0]}** foi recebido pelo nosso sistema! Assim que o Pix for processado e detectado (leva até 3 min), a sua entrega chegará por aqui. Se preferir atendimento humano agora, clique no botão flutuante do WhatsApp.`, 'admin');
+                }, 2000);
+            }
         }
 
         document.getElementById('openCartBtn').addEventListener('click', () => toggleSidebar('cartSidebar'));
