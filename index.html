@@ -1,52 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NIX SOCIAIS</title>
 
-<h2>💰 Meu Saldo</h2>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#050505;color:white}
+header{height:85px;background:#000;display:flex;align-items:center;justify-content:space-between;padding:0 25px;border-bottom:1px solid #111}
+.logo{font-size:34px;font-weight:900;color:#00d9ff}
+.menuBtn{font-size:36px;color:#00d9ff;cursor:pointer}
+.sidebar{position:fixed;top:0;right:-100%;width:100%;height:100%;background:#050505;z-index:10;padding:30px;transition:.3s}
+.sidebar.ativo{right:0}
+.close{font-size:35px;color:#00d9ff;text-align:right;cursor:pointer}
+.search{background:#222;border-radius:30px;padding:15px;margin:25px 0;color:#aaa}
+.menuItem{display:block;color:white;text-decoration:none;font-size:24px;margin:25px 0}
+.saldo{color:#00d9ff;font-size:24px;text-align:center;margin:25px 0}
+.hero{padding:35px 25px;text-align:center}
+.hero h1{color:#00d9ff;font-size:36px;margin-bottom:10px}
+.hero p{color:#bbb;font-size:18px}
+.banner{background:#101827;border-radius:18px;padding:25px;margin:25px}
+.section{padding:25px}
+.section h2{font-size:34px;color:white;text-shadow:0 0 12px #00d9ff;margin-bottom:20px}
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.cat{background:#111;border:1px solid #00d9ff;border-radius:14px;padding:18px;text-align:center;font-size:20px;font-weight:bold;color:#00d9ff}
+.produto{background:#0b0b0b;border:1px solid #00d9ff;border-radius:12px;padding:14px;margin-bottom:10px;font-size:18px}
+.produto:hover{background:#111}
+.card{background:#101827;border-radius:18px;padding:25px;margin:25px}
+input,select,textarea{width:100%;padding:14px;margin:10px 0;background:#111;border:1px solid #333;color:white;border-radius:10px;font-size:16px}
+button{background:#00cfff;color:white;border:0;padding:14px;border-radius:12px;font-size:17px;font-weight:bold;width:100%;margin-top:10px}
+.whats{position:fixed;right:20px;bottom:25px;background:#25d366;color:white;width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:38px;text-decoration:none;box-shadow:0 0 20px #25d366}
+.hidden{display:none}
+</style>
+</head>
 
-<div style="background:#151515;border:1px solid #d4af37;padding:15px;border-radius:10px;margin-bottom:15px;">
-Saldo disponível: <b id="saldoUsuario">R$ 0,00</b><br><br>
+<body>
 
-<button onclick="abrirRecarga()">
-➕ Adicionar Saldo
-</button>
+<header>
+<div class="logo">NIX SOCIAIS</div>
+<div class="menuBtn" onclick="abrirMenu()">☰</div>
+</header>
 
+<div id="sidebar" class="sidebar">
+<div class="close" onclick="fecharMenu()">×</div>
+<div class="logo">NIX SOCIAIS</div>
+<div class="search">🔍 Buscar serviços...</div>
+<a class="menuItem" href="#" onclick="mostrarSecao('home')">🏠 Home</a>
+<a class="menuItem" href="#" onclick="mostrarSecao('pedidos')">📦 Pedidos</a>
+<a class="menuItem" href="#" onclick="mostrarSecao('saldo')">💰 Adicionar Saldo</a>
+<a class="menuItem" href="#" onclick="mostrarSecao('conta')">👤 Minha Conta</a>
+<a class="menuItem" href="https://wa.me/5571994141667">💬 Suporte</a>
+<div class="saldo">💰 R$ <span id="saldoTopo">0,00</span></div>
 </div>
 
-<div id="areaRecarga" style="display:none;background:#222;border:1px solid #d4af37;padding:15px;border-radius:10px;margin-bottom:15px;">
+<section id="home" class="secao">
+<div class="hero">
+<h1>Serviços digitais com saldo</h1>
+<p>Adicione saldo, escolha seu serviço e acompanhe seus pedidos.</p>
+</div>
 
-<h3>Adicionar Saldo</h3>
+<div class="banner">
+<h2>💰 Saldo atual: R$ <span id="saldoHome">0,00</span></h2>
+<button onclick="mostrarSecao('saldo')">Adicionar Saldo</button>
+</div>
+
+<div class="section">
+<h2>Categorias</h2>
+<div class="cats">
+<div class="cat" onclick="filtrarCategoria('Streaming')">📺 Streaming</div>
+<div class="cat" onclick="filtrarCategoria('Serviços Sociais')">🌐 Serviços Digitais</div>
+</div>
+</div>
+
+<div class="section">
+<h2 id="tituloProdutos">Em Alta</h2>
+<div id="listaProdutos">Carregando produtos...</div>
+</div>
+</section><section id="saldo" class="secao hidden">
+
+<div class="card">
+<h2>💰 Adicionar Saldo</h2>
 
 <input id="valorRecarga" placeholder="Valor da recarga">
 
-<input id="nomePixRecarga" placeholder="Nome usado no Pix">
+<input id="nomePixRecarga"
+placeholder="Nome usado no Pix">
+
+<div style="margin:15px 0">
+<b>Chave Pix:</b>
+<input value="71994141667" readonly>
+</div>
 
 <button onclick="solicitarRecarga()">
-Enviar Solicitação
+Continuar
 </button>
 
 </div>
-<p id="produtoEscolhido"></p>
 
-<input value="71994141667" readonly>
-<input id="clienteNome" placeholder="Seu nome">
-<input id="nomePix" placeholder="Nome usado no pagamento Pix">
+</section>
 
-<select id="formaEntrega">
-<option>Chat da Plataforma</option>
-<option>WhatsApp</option>
-<option>Telegram</option>
-</select>
+<section id="conta" class="secao hidden">
 
-<input id="contatoEntrega" placeholder="Contato para entrega">
-<button onclick="enviarPedido()">Enviar Pedido</button>
+<div class="card">
 
-<div id="statusArea"></div>
+<h2>👤 Minha Conta</h2>
+
+<input id="emailConta"
+placeholder="Email">
+
+<input id="nomeConta"
+placeholder="Nome">
+
+<input id="telefoneConta"
+placeholder="Telefone">
+
+<button>
+✏️ Editar Dados
+</button>
+
+<button onclick="mostrarSecao('saldo')">
+💰 Adicionar Saldo
+</button>
+
 </div>
+
+</section>
+
+<section id="pedidos" class="secao hidden">
+
+<div class="card">
+
+<h2>📦 Meus Pedidos</h2>
+
+<div id="listaPedidos">
+
+Nenhum pedido encontrado.
+
 </div>
+
+</div>
+
+</section>
+
+<a class="whats"
+href="https://wa.me/5571994141667">
+💬
+</a>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const firebaseConfig={
+const firebaseConfig = {
+
+const firebaseConfig = {
 apiKey:"AIzaSyBDmMHv_QDAgpJROzMiDlqSyahhRcWL1v0",
 authDomain:"st-streaming-9acd9.firebaseapp.com",
 projectId:"st-streaming-9acd9",
@@ -55,75 +163,81 @@ messagingSenderId:"695341762827",
 appId:"1:695341762827:web:d68e0e626e83f8b2e83a0e"
 };
 
-const app=initializeApp(firebaseConfig);
-const db=getFirestore(app);
+};
 
-let produtoAtual="";
-let precoAtual=0;
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.abrirMenu=function(){
+document.getElementById("sidebar").classList.add("ativo");
+}
+
+window.fecharMenu=function(){
+document.getElementById("sidebar").classList.remove("ativo");
+}
+
+window.mostrarSecao=function(id){
+
+document.querySelectorAll(".secao").forEach(sec=>{
+sec.classList.add("hidden");
+});
+
+document.getElementById(id).classList.remove("hidden");
+
+fecharMenu();
+
+}
+
+let categoriaAtual="";
+
+window.filtrarCategoria=function(cat){
+
+categoriaAtual=cat;
+
+document.getElementById("tituloProdutos").innerHTML=cat;
+
+carregarProdutos();
+
+}
+
+function carregarProdutos(){
 
 onSnapshot(collection(db,"produtos"),snap=>{
+
 let html="";
-snap.forEach(d=>{
-const p=d.data();
-if(p.ativo!==false){
+
+snap.forEach(doc=>{
+
+const p=doc.data();
+
+if(
+categoriaAtual==="" ||
+p.categoria===categoriaAtual
+){
+
 html+=`
 <div class="produto">
-<h3>${p.categoria==="Serviços Sociais"?"🌐":"📺"} ${p.nome}</h3>
-<p>${p.categoria}</p>
-<div class="preco">R$ ${p.preco}</div>
-<button onclick="comprar('${p.nome}',${p.preco})">Comprar</button>
-</div>`;
-}
-});
-document.getElementById("listaProdutos").innerHTML=html||"Nenhum produto cadastrado.";
-});
 
-window.comprar=function(produto,preco){
-produtoAtual=produto;
-precoAtual=preco;
-document.getElementById("pagamento").style.display="block";
-document.getElementById("produtoEscolhido").innerText=`Produto: ${produto} | Valor: R$ ${preco}`;
-document.getElementById("pagamento").scrollIntoView({behavior:"smooth"});
-};
+<b>${p.nome}</b><br>
 
-window.enviarPedido=async function(){
-const clienteNome=document.getElementById("clienteNome").value;
-const nomePix=document.getElementById("nomePix").value;
-const formaEntrega=document.getElementById("formaEntrega").value;
-const contatoEntrega=document.getElementById("contatoEntrega").value;
+💰 R$ ${p.preco}
 
-if(!clienteNome||!nomePix){
-alert("Preencha seu nome e o nome usado no Pix.");
-return;
+</div>
+`;
+
 }
 
-await addDoc(collection(db,"pedidos"),{
-clienteNome,
-produto:produtoAtual,
-preco:precoAtual,
-nomePix,
-formaEntrega,
-contatoEntrega,
-status:"Processando pagamento",
-criadoEm:serverTimestamp()
 });
 
-document.getElementById("statusArea").innerHTML=
-'<div class="status">⏳ Processando pagamento... Aguarde enquanto verificamos seu pagamento.</div>';
-};
-window.abrirRecarga = function(){
-
-const area =
-document.getElementById("areaRecarga");
-
-if(area.style.display==="none"){
-area.style.display="block";
-}else{
-area.style.display="none";
+if(html===""){
+html="Nenhum produto encontrado.";
 }
 
-}
+document.getElementById("listaProdutos").innerHTML=html;
 
+});
+
+}
 window.solicitarRecarga = async function(){
 
 const valor =
@@ -133,7 +247,7 @@ const nomePix =
 document.getElementById("nomePixRecarga").value;
 
 if(!valor || !nomePix){
-alert("Preencha os dados.");
+alert("Preencha todos os campos.");
 return;
 }
 
@@ -150,6 +264,10 @@ document.getElementById("valorRecarga").value="";
 document.getElementById("nomePixRecarga").value="";
 
 }
+
+carregarProdutos();
+
 </script>
 
-</body></html>
+</body>
+</html>
