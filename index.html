@@ -1,0 +1,155 @@
+
+<h2>💰 Meu Saldo</h2>
+
+<div style="background:#151515;border:1px solid #d4af37;padding:15px;border-radius:10px;margin-bottom:15px;">
+Saldo disponível: <b id="saldoUsuario">R$ 0,00</b><br><br>
+
+<button onclick="abrirRecarga()">
+➕ Adicionar Saldo
+</button>
+
+</div>
+
+<div id="areaRecarga" style="display:none;background:#222;border:1px solid #d4af37;padding:15px;border-radius:10px;margin-bottom:15px;">
+
+<h3>Adicionar Saldo</h3>
+
+<input id="valorRecarga" placeholder="Valor da recarga">
+
+<input id="nomePixRecarga" placeholder="Nome usado no Pix">
+
+<button onclick="solicitarRecarga()">
+Enviar Solicitação
+</button>
+
+</div>
+<p id="produtoEscolhido"></p>
+
+<input value="71994141667" readonly>
+<input id="clienteNome" placeholder="Seu nome">
+<input id="nomePix" placeholder="Nome usado no pagamento Pix">
+
+<select id="formaEntrega">
+<option>Chat da Plataforma</option>
+<option>WhatsApp</option>
+<option>Telegram</option>
+</select>
+
+<input id="contatoEntrega" placeholder="Contato para entrega">
+<button onclick="enviarPedido()">Enviar Pedido</button>
+
+<div id="statusArea"></div>
+</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyBDmMHv_QDAgpJROzMiDlqSyahhRcWL1v0",
+authDomain:"st-streaming-9acd9.firebaseapp.com",
+projectId:"st-streaming-9acd9",
+storageBucket:"st-streaming-9acd9.firebasestorage.app",
+messagingSenderId:"695341762827",
+appId:"1:695341762827:web:d68e0e626e83f8b2e83a0e"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+
+let produtoAtual="";
+let precoAtual=0;
+
+onSnapshot(collection(db,"produtos"),snap=>{
+let html="";
+snap.forEach(d=>{
+const p=d.data();
+if(p.ativo!==false){
+html+=`
+<div class="produto">
+<h3>${p.categoria==="Serviços Sociais"?"🌐":"📺"} ${p.nome}</h3>
+<p>${p.categoria}</p>
+<div class="preco">R$ ${p.preco}</div>
+<button onclick="comprar('${p.nome}',${p.preco})">Comprar</button>
+</div>`;
+}
+});
+document.getElementById("listaProdutos").innerHTML=html||"Nenhum produto cadastrado.";
+});
+
+window.comprar=function(produto,preco){
+produtoAtual=produto;
+precoAtual=preco;
+document.getElementById("pagamento").style.display="block";
+document.getElementById("produtoEscolhido").innerText=`Produto: ${produto} | Valor: R$ ${preco}`;
+document.getElementById("pagamento").scrollIntoView({behavior:"smooth"});
+};
+
+window.enviarPedido=async function(){
+const clienteNome=document.getElementById("clienteNome").value;
+const nomePix=document.getElementById("nomePix").value;
+const formaEntrega=document.getElementById("formaEntrega").value;
+const contatoEntrega=document.getElementById("contatoEntrega").value;
+
+if(!clienteNome||!nomePix){
+alert("Preencha seu nome e o nome usado no Pix.");
+return;
+}
+
+await addDoc(collection(db,"pedidos"),{
+clienteNome,
+produto:produtoAtual,
+preco:precoAtual,
+nomePix,
+formaEntrega,
+contatoEntrega,
+status:"Processando pagamento",
+criadoEm:serverTimestamp()
+});
+
+document.getElementById("statusArea").innerHTML=
+'<div class="status">⏳ Processando pagamento... Aguarde enquanto verificamos seu pagamento.</div>';
+};
+window.abrirRecarga = function(){
+
+const area =
+document.getElementById("areaRecarga");
+
+if(area.style.display==="none"){
+area.style.display="block";
+}else{
+area.style.display="none";
+}
+
+}
+
+window.solicitarRecarga = async function(){
+
+const valor =
+document.getElementById("valorRecarga").value;
+
+const nomePix =
+document.getElementById("nomePixRecarga").value;
+
+if(!valor || !nomePix){
+alert("Preencha os dados.");
+return;
+}
+
+await addDoc(collection(db,"recargas"),{
+valor:Number(valor),
+nomePix,
+status:"Pendente",
+criadoEm:serverTimestamp()
+});
+
+alert("✅ Solicitação enviada!");
+
+document.getElementById("valorRecarga").value="";
+document.getElementById("nomePixRecarga").value="";
+
+}
+</script>
+
+</body></html>
